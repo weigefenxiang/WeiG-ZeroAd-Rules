@@ -26,8 +26,8 @@
       "url": "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt",
       "role": "cn-strict",
       "license": "GPL-3.0",
-      "min_domains": 10000,
-      "max_domains": 1000000
+      "min_domains": 3000,
+      "max_domains": 100000
     },
     {
       "id": "hagezi-light",
