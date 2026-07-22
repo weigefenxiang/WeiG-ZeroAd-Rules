@@ -1,0 +1,13 @@
+{
+  "checked": 267897,
+  "confirmation_threshold": 3,
+  "confirmed_inactive": 0,
+  "schema": 1,
+  "statuses": {
+    "active": 178471,
+    "exists": 10990,
+    "nxdomain": 27998,
+    "unknown": 50438
+  },
+  "version": 2026072301
+}

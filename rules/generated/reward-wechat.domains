@@ -1,0 +1,12 @@
+# Independent reward-ad blocking pack.
+# pack_id=reward.wechat
+# rule_version=2026072301
+# rule_count=8
+wxa.wxs.qq.com
+wximg.wxs.qq.com
+wxsmw.wxs.qq.com
+wxsnsad.tc.qq.com
+wxsnsdy.tc.qq.com
+wxsnsdy.video.qq.com
+wxsnsdy.wxs.qq.com
+wxsnsdythumb.wxs.qq.com

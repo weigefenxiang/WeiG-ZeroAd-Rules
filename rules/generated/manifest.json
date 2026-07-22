@@ -1,0 +1,130 @@
+{
+  "constraints": {
+    "cn_global_overlap": 0,
+    "exact_domain_deduplication": true,
+    "nxdomain_confirmation_runs": 3,
+    "reward_overlap": 0
+  },
+  "defaults": {
+    "cn_profile": "lean",
+    "global_profile": "off",
+    "reward_packs_enabled": [
+      "reward.tencent",
+      "reward.wechat",
+      "reward.short-video",
+      "reward.other"
+    ]
+  },
+  "generated_on": "2026-07-23",
+  "health": {
+    "checked": 267897,
+    "confirmation_threshold": 3,
+    "confirmed_inactive": 0,
+    "schema": 1,
+    "statuses": {
+      "active": 178471,
+      "exists": 10990,
+      "nxdomain": 27998,
+      "unknown": 50438
+    },
+    "version": 2026072301
+  },
+  "packs": [
+    {
+      "default_enabled": true,
+      "domains_sha256": "fe3f6b4e1ada580cac161f17b3ca4d5494b2d269a4eb710a01719e370ee14601",
+      "file": "reward-tencent.domains",
+      "id": "reward.tencent",
+      "rules": 38,
+      "title_en": "Tencent / QQ reward ads",
+      "title_zh": "腾讯 / QQ 奖励广告",
+      "type": "reward_block"
+    },
+    {
+      "default_enabled": true,
+      "domains_sha256": "aa28909f699291502c34d610fbc2637dab018e5946fb4aacf377b6571b841573",
+      "file": "reward-wechat.domains",
+      "id": "reward.wechat",
+      "rules": 8,
+      "title_en": "WeChat reward ads",
+      "title_zh": "微信奖励广告",
+      "type": "reward_block"
+    },
+    {
+      "default_enabled": true,
+      "domains_sha256": "f467a4134a8212b4fa42f204efaf83cdd8d6860ce496d7de8e0e0f0758b45be1",
+      "file": "reward-short-video.domains",
+      "id": "reward.short-video",
+      "rules": 15,
+      "title_en": "Short-video reward ads",
+      "title_zh": "短视频奖励广告",
+      "type": "reward_block"
+    },
+    {
+      "default_enabled": true,
+      "domains_sha256": "fac47f1775454a0a22454f2ea35cb124a75500913a7ced9747d3303e89df0454",
+      "file": "reward-other.domains",
+      "id": "reward.other",
+      "rules": 13,
+      "title_en": "Other reward ads",
+      "title_zh": "其他奖励广告",
+      "type": "reward_block"
+    }
+  ],
+  "product": "WeiG-ZeroAd",
+  "profiles": {
+    "cn": {
+      "balanced": {
+        "domains_file": "cn-balanced.domains",
+        "domains_sha256": "fdc29dd9bed720875ff5ee30d1bd6a74f4089375e7808eab93b90f9ac98c302b",
+        "hosts_file": "cn-balanced.hosts",
+        "hosts_sha256": "cdebedf874ebcc6d5049fb8534b6a8c36c5c4f14f17f3210835cf84f083c6140",
+        "rules": 120986
+      },
+      "lean": {
+        "domains_file": "cn-lean.domains",
+        "domains_sha256": "49fb13b380a393aa9e2cd8cd4549ca30ac42022ae327b92be0766bcd3d7e232b",
+        "hosts_file": "cn-lean.hosts",
+        "hosts_sha256": "41391ef4ae41392b0b6f842679c5a37b2c76d488b06bca2e4430744fecac4166",
+        "rules": 17041
+      },
+      "strict": {
+        "domains_file": "cn-strict.domains",
+        "domains_sha256": "0efe15e06ee8afeef76db8eaa4c38478a1e5428ad8d0349cf88c93101549b1e4",
+        "hosts_file": "cn-strict.hosts",
+        "hosts_sha256": "77f17ac6e1ca8f315b8a8b60d1c5ed995d9fc4047f532c8c688a26881b9aca1e",
+        "rules": 123234
+      }
+    },
+    "global": {
+      "balanced": {
+        "domains_file": "global-balanced.domains",
+        "domains_sha256": "e79ec17497dcd322716ac9fd76015500ecc2fb2c0b67dff308d97c0f5807bea2",
+        "hosts_file": "global-balanced.hosts",
+        "hosts_sha256": "d19eae60cd4f204e1dd0b6213769822864da37bc39cce9e5dd15f6c056b05a68",
+        "rules": 70346
+      },
+      "lean": {
+        "domains_file": "global-lean.domains",
+        "domains_sha256": "c53b5b8d4e3ee3a43e5110e07d56f309e5ab08ff4241d30f5f7d7101cff92d02",
+        "hosts_file": "global-lean.hosts",
+        "hosts_sha256": "c469588f3ac94fe83f46668fdca0344c828d12067e747ce321f44290ac04791d",
+        "rules": 3850
+      },
+      "strict": {
+        "domains_file": "global-strict.domains",
+        "domains_sha256": "040951e34efdd0b2910160d66b493ac921ecfc72c2f77e1441a88cfff9560bc1",
+        "hosts_file": "global-strict.hosts",
+        "hosts_sha256": "8d6f837777dd1957e19f94b031ceaa68c9cc11cc42f2b054489e339196844061",
+        "rules": 144589
+      }
+    }
+  },
+  "reward": {
+    "domains_file": "reward-ads.domains",
+    "domains_sha256": "6499708892d59af7073ef5a3914168d1b02a4da9678c4e1dbe12248c3d56d720",
+    "rules": 74
+  },
+  "schema": 3,
+  "version": 2026072301
+}
