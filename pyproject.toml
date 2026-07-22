@@ -1,0 +1,9 @@
+[project]
+name = "weig-zeroad-rule-tools"
+version = "0.1.0"
+description = "Reproducible regional rule compiler for WeiG ZeroAd"
+requires-python = ">=3.11"
+dependencies = ["dnspython>=2.7,<3"]
+
+[tool.ruff]
+line-length = 100

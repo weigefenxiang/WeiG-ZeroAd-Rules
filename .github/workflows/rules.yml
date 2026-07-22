@@ -1,0 +1,170 @@
+name: Weekly rules
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "rules/generated/**"
+      - "rules/reports/**"
+      - "rules/health-state.json"
+      - "rules/sources-lock.json"
+      - "rules/version.txt"
+  schedule:
+    # Sunday 03:00 Asia/Singapore (Saturday 19:00 UTC).
+    - cron: "0 19 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weig-zeroad-rules-release
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e .
+      - run: python -m unittest discover -s tests -v
+
+  fetch:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        source: [anti-ad, 217heidai-lite, hagezi-light, stevenblack]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e .
+      - name: Fetch and normalize ${{ matrix.source }}
+        run: python -m rule_tools.fetch_source --source "${{ matrix.source }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-${{ matrix.source }}
+          path: |
+            staging/sources/${{ matrix.source }}.domains
+            staging/source-meta/${{ matrix.source }}.json
+          retention-days: 3
+
+  prepare:
+    needs: [test, fetch]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: source-*
+          path: staging
+          merge-multiple: true
+      - name: Build raw profiles and 16 stable shards
+        run: python -m rule_tools.prepare --shards 16
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dns-shards
+          path: staging/shards
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prepared-data
+          path: |
+            staging/profiles
+            staging/reward-ads.domains
+            staging/cn-catalog.domains
+            staging/prepare-summary.json
+            staging/source-meta
+          retention-days: 3
+
+  dns:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 16
+      matrix:
+        shard: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v5
+        with:
+          name: dns-shards
+          path: staging/shards
+      - name: Check DNS shard ${{ matrix.shard }}
+        run: >-
+          python -m rule_tools.dns_check
+          --input "staging/shards/shard-${{ matrix.shard }}.domains"
+          --output "staging/health/shard-${{ matrix.shard }}.jsonl"
+          --concurrency 20
+      - uses: actions/upload-artifact@v4
+        with:
+          name: health-${{ matrix.shard }}
+          path: staging/health/shard-${{ matrix.shard }}.jsonl
+          retention-days: 3
+
+  publish:
+    needs: dns
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v5
+        with:
+          name: prepared-data
+          path: staging
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: health-*
+          path: staging/health
+          merge-multiple: true
+      - name: Finalize profiles and verify invariants
+        run: |
+          RUN_DATE="$(TZ=Asia/Singapore date +%F)"
+          python -m rule_tools.finalize --date "$RUN_DATE"
+          python -m unittest discover -s tests -v
+          python -m rule_tools.build_release
+      - name: Commit auditable generated state
+        run: |
+          git config user.name "weig-zeroad-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rules/generated rules/health-state.json rules/sources-lock.json rules/version.txt rules/reports
+          git diff --cached --quiet || git commit -m "rules: weekly verified update"
+          git push
+      - name: Publish data-only release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(cat rules/version.txt)
+          TAG="rules-$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/WeiG-ZeroAd-Rules.zip dist/SHA256SUMS --clobber
+          else
+            gh release create "$TAG" dist/WeiG-ZeroAd-Rules.zip dist/SHA256SUMS \
+              --title "Rules $VERSION" \
+              --notes "Automated regional, deduplicated and DNS-checked WeiG ZeroAd rules. Data only."
+          fi

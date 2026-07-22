@@ -1,0 +1,40 @@
+name: Rule report / 规则反馈
+description: Report a missed ad, false positive, or reward-ad domain.
+title: "[Rule] "
+labels: ["rules"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type / 类型
+      options:
+        - Missed ad / 漏拦
+        - False positive / 误杀
+        - Reward ad / 奖励广告
+    validations:
+      required: true
+  - type: input
+    id: domain
+    attributes:
+      label: Exact domain / 精确域名
+      placeholder: ads.example.com
+    validations:
+      required: true
+  - type: input
+    id: app
+    attributes:
+      label: App or site / 应用或网站
+      description: Package name is optional. Do not include account information.
+  - type: input
+    id: version
+    attributes:
+      label: Rule version / 规则版本
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Reproduction and evidence / 复现和证据
+      description: Remove tokens, cookies, device identifiers and private URL parameters.
+    validations:
+      required: true

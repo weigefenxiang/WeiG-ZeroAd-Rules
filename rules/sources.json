@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "id": "weig-base",
+      "name": "Wei.G Base 2026-07-23",
+      "type": "local",
+      "path": "rules/sources/owned/weig-base-20260723.domains",
+      "role": "cn-base",
+      "license": "GPL-3.0"
+    },
+    {
+      "id": "anti-ad",
+      "name": "anti-AD domains",
+      "type": "remote",
+      "url": "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-domains.txt",
+      "role": "cn-balanced",
+      "license": "MIT",
+      "min_domains": 10000,
+      "max_domains": 1000000
+    },
+    {
+      "id": "217heidai-lite",
+      "name": "217heidai Hosts Lite",
+      "type": "remote",
+      "url": "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt",
+      "role": "cn-strict",
+      "license": "GPL-3.0",
+      "min_domains": 10000,
+      "max_domains": 1000000
+    },
+    {
+      "id": "hagezi-light",
+      "name": "HaGeZi Multi Light",
+      "type": "remote",
+      "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/light.txt",
+      "role": "global-balanced",
+      "license": "GPL-3.0",
+      "min_domains": 10000,
+      "max_domains": 500000
+    },
+    {
+      "id": "stevenblack",
+      "name": "StevenBlack unified hosts",
+      "type": "remote",
+      "url": "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+      "role": "global-validator-and-strict",
+      "license": "MIT",
+      "min_domains": 10000,
+      "max_domains": 1000000
+    }
+  ]
+}

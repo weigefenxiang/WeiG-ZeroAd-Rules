@@ -1,0 +1,5 @@
+/.venv/
+/dist/
+/staging/
+__pycache__/
+*.py[cod]

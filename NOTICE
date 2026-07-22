@@ -1,0 +1,8 @@
+WeiG-ZeroAd-Rules
+
+The build tools and Wei.G-owned rule snapshot are distributed under GPL-3.0.
+Generated data also incorporates or compares external lists. Preserve the
+attribution and license information in SOURCES.md when redistributing a build.
+
+The remote lists remain the work of their respective maintainers. A validator
+source is credited even when only its set membership affects an output.

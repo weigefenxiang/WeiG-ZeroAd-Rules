@@ -1,0 +1,7 @@
+* text=auto
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.domains text eol=lf
+*.hosts text eol=lf
