@@ -42,10 +42,6 @@ def fetch_one(root: Path, source_id: str) -> dict[str, object]:
     domains, parsed_entries, invalid_lines = parse_domains(text)
     minimum = int(source.get("min_domains", 1))
     maximum = int(source.get("max_domains", 2_000_000))
-    if not minimum <= len(domains) <= maximum:
-        raise RuntimeError(
-            f"{source_id} returned {len(domains)} domains; expected {minimum}..{maximum}"
-        )
     target = root / "staging/sources" / f"{source_id}.domains"
     write_domains(
         target,
@@ -62,8 +58,16 @@ def fetch_one(root: Path, source_id: str) -> dict[str, object]:
         "duplicates_removed": max(parsed_entries - len(domains), 0),
         "invalid_lines_ignored": invalid_lines,
         "sha256": sha256_file(target),
+        "expected_min_domains": minimum,
+        "expected_max_domains": maximum,
+        "within_expected_range": minimum <= len(domains) <= maximum,
     }
     write_json(root / "staging/source-meta" / f"{source_id}.json", metadata)
+    if not metadata["within_expected_range"]:
+        raise RuntimeError(
+            f"{source_id} returned {len(domains)} domains; expected {minimum}..{maximum}. "
+            "The normalized source and metadata were kept for diagnostics."
+        )
     return metadata
 
 

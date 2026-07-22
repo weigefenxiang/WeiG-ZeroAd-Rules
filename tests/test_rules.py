@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import datetime as dt
+import importlib.util
 import json
 import tempfile
 import unittest
 import zipfile
 from pathlib import Path
+from unittest.mock import patch
 
 from rule_tools.build_release import build, release_files
 from rule_tools.common import domains_from_line, load_domains, normalize_domain
+from rule_tools.fetch_source import fetch_one
 from rule_tools.pipeline import (
     PROFILE_NAMES,
     apply_inactive,
@@ -20,6 +23,7 @@ from rule_tools.prepare import prepare
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DNSPYTHON_AVAILABLE = importlib.util.find_spec("dns") is not None
 
 
 class ParsingTests(unittest.TestCase):
@@ -113,6 +117,81 @@ class HealthTests(unittest.TestCase):
                 root, raw, {"reward.example"}, statuses, dt.date(2026, 7, 23)
             )
             self.assertEqual(manifest["reward"]["rules"], 0)
+
+
+class ActionDiagnosticsTests(unittest.TestCase):
+    @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
+    def test_dns_check_streams_results_and_writes_summary(self) -> None:
+        from rule_tools import dns_check
+
+        statuses = {
+            "a.example": "active",
+            "b.example": "exists",
+            "c.example": "nxdomain",
+            "d.example": "unknown",
+        }
+
+        async def fake_check(domain: str, resolvers: object) -> tuple[str, dict[str, str]]:
+            del resolvers
+            status = statuses[domain]
+            return status, {"test": status}
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            input_path = root / "shard-00.domains"
+            output_path = root / "shard-00.jsonl"
+            summary_path = root / "shard-00.summary.json"
+            input_path.write_text("d.example\nb.example\na.example\nc.example\n", encoding="utf-8")
+            with patch.object(dns_check, "check_domain", new=fake_check):
+                counts = dns_check.check_file(
+                    input_path,
+                    output_path,
+                    concurrency=2,
+                    summary_path=summary_path,
+                    progress_seconds=3600,
+                    progress_steps=2,
+                )
+            self.assertEqual(counts, {status: 1 for status in dns_check.STATUSES})
+            rows = [json.loads(line) for line in output_path.read_text().splitlines()]
+            self.assertEqual([row["domain"] for row in rows], sorted(statuses))
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            self.assertTrue(summary["complete"])
+            self.assertEqual(summary["completed"], 4)
+            self.assertEqual(summary["statuses"], counts)
+
+    def test_rejected_source_keeps_normalized_diagnostics(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "rules").mkdir()
+            (root / "rules/sources.json").write_text(
+                json.dumps(
+                    {
+                        "sources": [
+                            {
+                                "id": "sample",
+                                "name": "Sample",
+                                "type": "remote",
+                                "url": "https://example.invalid/list",
+                                "license": "test",
+                                "min_domains": 3,
+                                "max_domains": 10,
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with patch("rule_tools.fetch_source.fetch", return_value="a.example\nb.example\n"):
+                with self.assertRaisesRegex(RuntimeError, "kept for diagnostics"):
+                    fetch_one(root, "sample")
+            self.assertEqual(
+                load_domains(root / "staging/sources/sample.domains"),
+                {"a.example", "b.example"},
+            )
+            metadata = json.loads(
+                (root / "staging/source-meta/sample.json").read_text(encoding="utf-8")
+            )
+            self.assertFalse(metadata["within_expected_range"])
 
 
 class RepositoryDataTests(unittest.TestCase):
