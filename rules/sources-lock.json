@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-07-24",
+  "generated_on": "2026-07-25",
   "schema": 1,
   "sources": [
     {
@@ -38,9 +38,9 @@
       "invalid_lines_ignored": 0,
       "license": "GPL-3.0",
       "name": "HaGeZi Multi Light",
-      "parsed_entries": 89246,
-      "sha256": "3679436b6140f756643579fbcdd78ddaa01633a91028130cb4d99925f2ea4a93",
-      "unique_domains": 89246,
+      "parsed_entries": 89249,
+      "sha256": "fc9dcd4ffe9d3d49b5d7c998a5dc2f571dfcd244998f476c1c9fffdd014b06db",
+      "unique_domains": 89249,
       "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/light.txt",
       "within_expected_range": true
     },

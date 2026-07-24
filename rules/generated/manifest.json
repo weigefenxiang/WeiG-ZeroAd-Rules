@@ -15,24 +15,24 @@
       "reward.other"
     ]
   },
-  "generated_on": "2026-07-24",
+  "generated_on": "2026-07-25",
   "health": {
-    "checked": 180445,
+    "checked": 271357,
     "confirmation_threshold": 3,
     "confirmed_inactive": 0,
     "schema": 1,
     "statuses": {
-      "active": 119746,
-      "exists": 7457,
-      "nxdomain": 24657,
-      "unknown": 28585
+      "active": 191415,
+      "exists": 12814,
+      "nxdomain": 37571,
+      "unknown": 29557
     },
-    "version": 2026072401
+    "version": 2026072501
   },
   "packs": [
     {
       "default_enabled": true,
-      "domains_sha256": "d3cf2d7897b2a8e0bc8c8b1a9d744fbcd1a872b2a2e209e6c7c10fd3b038b58b",
+      "domains_sha256": "4edf7302048f728c352114398cd5c1b0d0d3af4121ef719fef7edc9657722b54",
       "file": "reward-tencent.domains",
       "id": "reward.tencent",
       "rules": 38,
@@ -42,7 +42,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "f7c6a56def378d0a05e44c3d63332f4e54db010a8446784dbbcc1f9c64f991af",
+      "domains_sha256": "ba745c18b663e8f80e68201f6ae1f2c19ed70f3bca5e1580ec4da812f46941ed",
       "file": "reward-wechat.domains",
       "id": "reward.wechat",
       "rules": 8,
@@ -52,7 +52,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "97c272967e18d71a4bacd1e3b59a36f8715efa4b8a03281200c4b490ae0093a5",
+      "domains_sha256": "14985eacff0fa0bbae79f4cc7a3541d21e248484bee473bdaf0ffd27ad32064f",
       "file": "reward-short-video.domains",
       "id": "reward.short-video",
       "rules": 15,
@@ -62,7 +62,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "af6788f01b4a2197afbf4be17015151d84bf43f57472d57959a93893123a649c",
+      "domains_sha256": "56480d5f84a4926c7ac384082ea550d42a8c131072cb0c0f3a0d5abafa22e299",
       "file": "reward-other.domains",
       "id": "reward.other",
       "rules": 13,
@@ -76,69 +76,69 @@
     "cn": {
       "balanced": {
         "domains_file": "cn-balanced.domains",
-        "domains_sha256": "35e03a63e192f0fc9fe1eeb3df3081f15bd84d840a0ce1447cf69327d5a5e2c7",
+        "domains_sha256": "5679dcbe689b48ed884ce613c6055168413d7194987acbacbadda442e890729a",
         "hosts_file": "cn-balanced.hosts",
-        "hosts_sha256": "323ba188b28a5758debb712ae4cf8c90c942a72f00195cb5ee1dedaaca8245c2",
+        "hosts_sha256": "8ef72ca1ae3b71dae35be7ec77ad45f59f7e91d676e8de59fd39df72d69e68e6",
         "near_safety_cap": false,
-        "rules": 5726,
+        "rules": 4314,
         "safety_cap": 200000
       },
       "lean": {
         "domains_file": "cn-lean.domains",
-        "domains_sha256": "c34b41cff54b9da6793feeef196629bf90c89252485af7350fd31c8e6773c5bf",
+        "domains_sha256": "33cde9547625a06d3fa0562d02a5be7b76573fe3593b6fcad6ada6ac2460739a",
         "hosts_file": "cn-lean.hosts",
-        "hosts_sha256": "1e7df019ce166171d20ffb17a35f809d47a3f074ad322c64b0e93d15b2fe337f",
+        "hosts_sha256": "7398297b9a2f0b966b0397007f29fcd3ffdfd61523a25f1d08a0613d6b43e2ad",
         "near_safety_cap": false,
-        "rules": 1700,
+        "rules": 638,
         "safety_cap": 200000
       },
       "strict": {
         "domains_file": "cn-strict.domains",
-        "domains_sha256": "5d2f8cc509a6143ecff3588ef238c5a70e20b44f37d0f3453cddd1a510395eab",
+        "domains_sha256": "0967a13feeed6b101b248b21f2591ea01db76535f4746b82e7fd070515f569ae",
         "hosts_file": "cn-strict.hosts",
-        "hosts_sha256": "167c062c6c5e0355c4d6bbad8bb128a404ba0c05c6b9b25036719df8276e596a",
+        "hosts_sha256": "cc4621188a2acee543ddfe94a3bb08ade848866eba0993021552ac1f520949d3",
         "near_safety_cap": false,
-        "rules": 6532,
+        "rules": 123248,
         "safety_cap": 200000
       }
     },
     "global": {
       "balanced": {
         "domains_file": "global-balanced.domains",
-        "domains_sha256": "3c36dc2caff0a81005d76b4c5625171beb2611338b2f614b21491638576a307a",
+        "domains_sha256": "790933ff741543aec55993c3951639ecb7bbc3165e801c984d879b130183b88d",
         "hosts_file": "global-balanced.hosts",
-        "hosts_sha256": "a0682768374572d3d57077da757f7b05599658e8576ded894b9aca2105dca751",
+        "hosts_sha256": "a024faeb0f954c6e5b9bbbab13a826b95350dc0e99e02860a8e29613c60f40fa",
         "near_safety_cap": false,
-        "rules": 88138,
+        "rules": 70603,
         "safety_cap": 200000
       },
       "lean": {
         "domains_file": "global-lean.domains",
-        "domains_sha256": "ce719160d045949cda83059bfbf57ae80e51c6d9b6be58342d068dd5465d3b07",
+        "domains_sha256": "5591c243eb93aea0529b059bfc14aa8f1866d6b4b74a7b1ff33044f006d97255",
         "hosts_file": "global-lean.hosts",
-        "hosts_sha256": "3fe22cde9a92dc89217cb4731f49601b820bb3f33b8e3f6d6feb11230343d9bc",
+        "hosts_sha256": "8bdf522675c92a3d23ac3e03b9c2e17157fd6bc715fd23634afe0c35c364392b",
         "near_safety_cap": false,
-        "rules": 7109,
+        "rules": 3859,
         "safety_cap": 150000
       },
       "strict": {
         "domains_file": "global-strict.domains",
-        "domains_sha256": "3fd058e3b279207c67772626d8ad525ff6bcb6c2c94879aeeb877287e94b2dca",
+        "domains_sha256": "f386588ba78829ae3d682ee0664d9d67d5b19b1437c9a5b4aaec2b67eb282beb",
         "hosts_file": "global-strict.hosts",
-        "hosts_sha256": "0887b24756b8365360c200d33598fee8662fc6eef133b3b64ba4e807c177cbec",
+        "hosts_sha256": "9ace764ae8164af6c172a5e88b7b3be2e89ab7ae5966e887000df82d9ce2fa99",
         "near_safety_cap": false,
-        "rules": 173839,
+        "rules": 148035,
         "safety_cap": 250000
       }
     }
   },
   "reward": {
     "domains_file": "reward-ads.domains",
-    "domains_sha256": "fd1ec0326c9c9a0736fdddec231327b24edd3eb8c3da6fac9ebd4000afaa400a",
+    "domains_sha256": "6193ccf9703435958c37028fb4a50c4ff05a124691e72a0d8511e2846906a311",
     "near_safety_cap": false,
     "rules": 74,
     "safety_cap": 10000
   },
   "schema": 3,
-  "version": 2026072401
+  "version": 2026072501
 }

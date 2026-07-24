@@ -1,0 +1,26 @@
+{
+  "health": {
+    "checked": 271357,
+    "confirmation_threshold": 3,
+    "confirmed_inactive": 0,
+    "schema": 1,
+    "statuses": {
+      "active": 191415,
+      "exists": 12814,
+      "nxdomain": 37571,
+      "unknown": 29557
+    },
+    "version": 2026072501
+  },
+  "profiles": {
+    "cn-balanced": 4314,
+    "cn-lean": 638,
+    "cn-strict": 123248,
+    "global-balanced": 70603,
+    "global-lean": 3859,
+    "global-strict": 148035
+  },
+  "reward": 74,
+  "schema": 1,
+  "version": 2026072501
+}
