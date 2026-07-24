@@ -7,11 +7,13 @@
 
 | 地区 | 精简 | 平衡 | 严格 |
 |---|---|---|---|
-| 境内 | 有效的 Wei.G 基础 | Wei.G + anti-AD | Wei.G + anti-AD + 217heidai Lite |
-| 境外 | HaGeZi Light 与 StevenBlack 交集 | HaGeZi Light | HaGeZi Light 与 StevenBlack 并集 |
+| 境内 | `CN(Wei.G)` | `CN(Wei.G ∪ anti-AD)` | `CN(Wei.G ∪ anti-AD ∪ 217heidai)` |
+| 境外 | `HaGeZi ∩ StevenBlack - 境内目录` | `HaGeZi - 境内目录` | `HaGeZi ∪ StevenBlack - 境内目录` |
 
-全部境外配置都会减去完整境内目录。域名只有在连续三次每周检测中，多个 DNS
-都返回 NXDOMAIN 后，才会从有效配置中剔除。
+`CN(X)` 只保留明确确认属于境内的域名，地域未知项会从境内规则删除。人工
+覆盖、国家后缀和平台后缀均可在 `rules/region/`
+审计调整。全部境外配置都会减去 `CN(Wei.G ∪ anti-AD ∪ 217heidai)`；普通配置
+还会排除奖励广告，以及连续三周被多个 DNS 确认 NXDOMAIN 的域名。
 
 ## 使用
 

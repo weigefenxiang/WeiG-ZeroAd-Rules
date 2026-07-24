@@ -99,6 +99,7 @@ jobs:
             staging/profiles
             staging/reward-ads.domains
             staging/cn-catalog.domains
+            staging/region
             staging/prepare-summary.json
             staging/source-meta
           retention-days: 3
