@@ -110,7 +110,9 @@ jobs:
     timeout-minutes: 120
     strategy:
       fail-fast: false
-      max-parallel: 16
+      # Public resolvers throttle the 16 x 20 fan-out. Eight runners keep the
+      # global query rate sustainable and generally finish sooner.
+      max-parallel: 8
       matrix:
         shard: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"]
     steps:

@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import json
 import math
 import os
 import time
+from collections import deque
 from collections.abc import Callable
 from pathlib import Path
 
@@ -17,21 +19,27 @@ from rule_tools.common import load_domains
 
 
 RESOLVERS = (
-    ("alidns", "223.5.5.5"),
-    ("dnspod", "119.29.29.29"),
-    ("cloudflare", "1.1.1.1"),
-    ("google", "8.8.8.8"),
+    ("cloudflare", "1.1.1.1", 1.5, 2.2),
+    ("google", "8.8.8.8", 1.5, 2.2),
+    ("alidns", "223.5.5.5", 2.0, 2.8),
+    ("dnspod", "119.29.29.29", 2.0, 2.8),
 )
-QUERY_TYPES = ("A", "AAAA", "CNAME")
+PRIMARY_RESOLVERS = ("cloudflare", "google")
+CONFIRMATION_RESOLVERS = ("alidns", "dnspod")
+QUERY_TYPES = ("A", "AAAA")
 STATUSES = ("active", "exists", "nxdomain", "unknown")
+RESOLVER_OUTCOMES = ("active", "exists", "nxdomain", "timeout", "error")
+NXDOMAIN_QUORUM = 3
 ResultCallback = Callable[[dict[str, object], int, int], None]
 
 
-def make_resolver(nameserver: str) -> dns.asyncresolver.Resolver:
+def make_resolver(
+    nameserver: str, timeout: float, lifetime: float
+) -> dns.asyncresolver.Resolver:
     resolver = dns.asyncresolver.Resolver(configure=False)
     resolver.nameservers = [nameserver]
-    resolver.timeout = 2.5
-    resolver.lifetime = 4.0
+    resolver.timeout = timeout
+    resolver.lifetime = lifetime
     return resolver
 
 
@@ -46,33 +54,89 @@ async def query_one(domain: str, resolver: dns.asyncresolver.Resolver) -> str:
             return "nxdomain"
         except dns.resolver.NoAnswer:
             saw_no_answer = True
-        except (dns.resolver.NoNameservers, dns.exception.Timeout, OSError):
+        except dns.exception.Timeout:
+            return "timeout"
+        except (dns.resolver.NoNameservers, OSError):
             return "error"
     return "exists" if saw_no_answer else "error"
 
 
-async def check_domain(
-    domain: str, resolvers: dict[str, dns.asyncresolver.Resolver]
-) -> tuple[str, dict[str, str]]:
-    primary_name = RESOLVERS[0][0]
-    primary = await query_one(domain, resolvers[primary_name])
-    evidence = {primary_name: primary}
-    if primary in {"active", "exists"}:
-        return primary, evidence
+def retry_delay(domain: str) -> float:
+    """Spread retries deterministically over 0.3-1.0 seconds."""
+    value = int.from_bytes(hashlib.sha256(domain.encode("utf-8")).digest()[:2], "big")
+    return 0.3 + (value / 65_535) * 0.7
 
-    remaining_names = [name for name, _ in RESOLVERS[1:]]
-    remaining = await asyncio.gather(
-        *(query_one(domain, resolvers[name]) for name in remaining_names)
-    )
-    evidence.update(dict(zip(remaining_names, remaining)))
+
+def positive_status(evidence: dict[str, str]) -> str | None:
     values = set(evidence.values())
     if "active" in values:
-        return "active", evidence
+        return "active"
     if "exists" in values:
-        return "exists", evidence
-    if values == {"nxdomain"}:
-        return "nxdomain", evidence
-    return "unknown", evidence
+        return "exists"
+    return None
+
+
+async def check_domain(
+    domain: str, resolvers: dict[str, dns.asyncresolver.Resolver]
+) -> tuple[str, dict[str, str], dict[str, dict[str, int]]]:
+    evidence: dict[str, str] = {}
+    attempts = {
+        name: {outcome: 0 for outcome in RESOLVER_OUTCOMES}
+        for name, *_ in RESOLVERS
+    }
+
+    async def query_group(
+        names: tuple[str, ...] | list[str], stop_on_positive: bool = False
+    ) -> None:
+        tasks = {
+            asyncio.create_task(query_one(domain, resolvers[name])): name
+            for name in names
+        }
+        pending = set(tasks)
+        while pending:
+            done, pending = await asyncio.wait(
+                pending, return_when=asyncio.FIRST_COMPLETED
+            )
+            for task in done:
+                name = tasks[task]
+                outcome = task.result()
+                evidence[name] = outcome
+                attempts[name][outcome] += 1
+            if stop_on_positive and positive_status(evidence):
+                for task in pending:
+                    task.cancel()
+                await asyncio.gather(*pending, return_exceptions=True)
+                return
+
+    # Fast path for GitHub's US runners.
+    await query_group(PRIMARY_RESOLVERS, stop_on_positive=True)
+    positive = positive_status(evidence)
+    if positive:
+        return positive, evidence, attempts
+
+    # Slower resolvers are used only to confirm unresolved/NXDOMAIN candidates.
+    # A timeout is never treated as NXDOMAIN.
+    await query_group(CONFIRMATION_RESOLVERS, stop_on_positive=True)
+    positive = positive_status(evidence)
+    if positive:
+        return positive, evidence, attempts
+    if sum(value == "nxdomain" for value in evidence.values()) >= NXDOMAIN_QUORUM:
+        return "nxdomain", evidence, attempts
+
+    failed = [
+        name
+        for name, outcome in evidence.items()
+        if outcome in {"timeout", "error"}
+    ]
+    if failed:
+        await asyncio.sleep(retry_delay(domain))
+        await query_group(failed, stop_on_positive=True)
+        positive = positive_status(evidence)
+        if positive:
+            return positive, evidence, attempts
+        if sum(value == "nxdomain" for value in evidence.values()) >= NXDOMAIN_QUORUM:
+            return "nxdomain", evidence, attempts
+    return "unknown", evidence, attempts
 
 
 async def run_checks(
@@ -81,12 +145,20 @@ async def run_checks(
     if concurrency < 1 or concurrency > 64:
         raise ValueError("concurrency must be between 1 and 64")
     semaphore = asyncio.Semaphore(concurrency)
-    resolvers = {name: make_resolver(address) for name, address in RESOLVERS}
+    resolvers = {
+        name: make_resolver(address, timeout, lifetime)
+        for name, address, timeout, lifetime in RESOLVERS
+    }
 
     async def guarded(domain: str) -> dict[str, object]:
         async with semaphore:
-            status, evidence = await check_domain(domain, resolvers)
-            return {"domain": domain, "status": status, "evidence": evidence}
+            status, evidence, attempts = await check_domain(domain, resolvers)
+            return {
+                "domain": domain,
+                "status": status,
+                "evidence": evidence,
+                "attempts": attempts,
+            }
 
     tasks = [asyncio.create_task(guarded(domain)) for domain in domains]
     results: list[dict[str, object]] = []
@@ -135,6 +207,12 @@ class ProgressReporter:
         self.last_domain = ""
         self.started = time.monotonic()
         self.last_log = self.started
+        self.window_seconds = 60.0
+        self.samples: deque[tuple[float, int]] = deque([(self.started, 0)])
+        self.resolver_outcomes = {
+            name: {outcome: 0 for outcome in RESOLVER_OUTCOMES}
+            for name, *_ in RESOLVERS
+        }
         self.step_size = max(1, math.ceil(max(total, 1) / max(progress_steps, 1)))
         self.next_step = self.step_size
 
@@ -156,6 +234,21 @@ class ProgressReporter:
         self.counts[status] = self.counts.get(status, 0) + 1
 
         now = time.monotonic()
+        self.samples.append((now, completed))
+        cutoff = now - self.window_seconds
+        while len(self.samples) > 1 and self.samples[1][0] <= cutoff:
+            self.samples.popleft()
+        attempts = result.get("attempts", {})
+        if isinstance(attempts, dict):
+            for resolver_name, outcomes in attempts.items():
+                if resolver_name not in self.resolver_outcomes or not isinstance(
+                    outcomes, dict
+                ):
+                    continue
+                for outcome, count in outcomes.items():
+                    if outcome in self.resolver_outcomes[resolver_name]:
+                        self.resolver_outcomes[resolver_name][outcome] += int(count)
+
         should_log = (
             completed == total
             or completed >= self.next_step
@@ -178,10 +271,18 @@ class ProgressReporter:
         now = time.monotonic() if now is None else now
         elapsed = max(now - self.started, 0.0)
         speed = self.completed / elapsed if elapsed else 0.0
+        window_started, window_completed = self.samples[0]
+        window_elapsed = max(now - window_started, 0.0)
+        recent_speed = (
+            (self.completed - window_completed) / window_elapsed
+            if window_elapsed
+            else speed
+        )
         remaining = self.total - self.completed
-        eta = remaining / speed if speed > 0 and not complete else None
+        eta_speed = recent_speed if elapsed >= 30 and recent_speed > 0 else speed
+        eta = remaining / eta_speed if eta_speed > 0 and not complete else None
         result: dict[str, object] = {
-            "schema": 1,
+            "schema": 2,
             "complete": complete,
             "input_file": self.input_path.name,
             "output_file": self.output_path.name,
@@ -193,8 +294,13 @@ class ProgressReporter:
             "concurrency": self.concurrency,
             "elapsed_seconds": round(elapsed, 2),
             "domains_per_second": round(speed, 2),
+            "recent_domains_per_second": round(recent_speed, 2),
             "eta_seconds": round(eta, 2) if eta is not None else None,
             "statuses": dict(self.counts),
+            "resolver_outcomes": {
+                name: dict(outcomes)
+                for name, outcomes in self.resolver_outcomes.items()
+            },
             "last_domain": self.last_domain or None,
         }
         if error:
@@ -221,7 +327,8 @@ class ProgressReporter:
         print(
             "[dns] "
             f"{self.completed:,}/{self.total:,} ({summary['progress_percent']:.1f}%) | "
-            f"{summary['domains_per_second']:.1f} domains/s | "
+            f"recent={summary['recent_domains_per_second']:.1f}/s "
+            f"avg={summary['domains_per_second']:.1f}/s | "
             f"ETA {format_duration(summary['eta_seconds'])} | "
             + " ".join(f"{name}={statuses.get(name, 0):,}" for name in STATUSES)
             + f" | last={self.last_domain}",
@@ -237,14 +344,18 @@ def append_github_summary(summary: dict[str, object]) -> None:
     if not isinstance(statuses, dict):
         statuses = {}
     state = "Completed" if summary.get("complete") else "Incomplete / failed"
+    resolver_outcomes = summary.get("resolver_outcomes", {})
+    if not isinstance(resolver_outcomes, dict):
+        resolver_outcomes = {}
     lines = [
         f"## DNS `{summary.get('input_file', 'shard')}` — {state}",
         "",
-        "| Progress | Speed | Elapsed | ETA | Last domain |",
-        "|---:|---:|---:|---:|---|",
+        "| Progress | Recent speed | Average speed | Elapsed | ETA | Last domain |",
+        "|---:|---:|---:|---:|---:|---|",
         (
             f"| {summary.get('completed', 0):,}/{summary.get('total', 0):,} "
             f"({summary.get('progress_percent', 0)}%) | "
+            f"{summary.get('recent_domains_per_second', 0)} domains/s | "
             f"{summary.get('domains_per_second', 0)} domains/s | "
             f"{format_duration(float(summary.get('elapsed_seconds', 0)))} | "
             f"{format_duration(summary.get('eta_seconds'))} | "
@@ -257,7 +368,22 @@ def append_github_summary(summary: dict[str, object]) -> None:
             f"| {statuses.get('active', 0):,} | {statuses.get('exists', 0):,} | "
             f"{statuses.get('nxdomain', 0):,} | {statuses.get('unknown', 0):,} |"
         ),
+        "",
+        "| Resolver | Active | Exists | NXDOMAIN | Timeout | Error |",
+        "|---|---:|---:|---:|---:|---:|",
     ]
+    for name, *_ in RESOLVERS:
+        outcomes = resolver_outcomes.get(name, {})
+        if not isinstance(outcomes, dict):
+            outcomes = {}
+        lines.append(
+            f"| {name} | "
+            + " | ".join(
+                f"{int(outcomes.get(outcome, 0)):,}"
+                for outcome in RESOLVER_OUTCOMES
+            )
+            + " |"
+        )
     if summary.get("error"):
         lines.extend(("", f"Error: `{summary['error']}`"))
     with Path(target).open("a", encoding="utf-8", newline="\n") as stream:
@@ -272,7 +398,10 @@ def check_file(
     progress_seconds: float = 30.0,
     progress_steps: int = 20,
 ) -> dict[str, int]:
-    domains = sorted(load_domains(input_path))
+    domains = sorted(
+        load_domains(input_path),
+        key=lambda domain: (hashlib.sha256(domain.encode("utf-8")).digest(), domain),
+    )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     summary_path = summary_path or output_path.with_suffix(".summary.json")
 

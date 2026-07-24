@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import datetime as dt
 import importlib.util
 import json
@@ -169,10 +170,12 @@ class ActionDiagnosticsTests(unittest.TestCase):
             "d.example": "unknown",
         }
 
-        async def fake_check(domain: str, resolvers: object) -> tuple[str, dict[str, str]]:
+        async def fake_check(
+            domain: str, resolvers: object
+        ) -> tuple[str, dict[str, str], dict[str, dict[str, int]]]:
             del resolvers
             status = statuses[domain]
-            return status, {"test": status}
+            return status, {"cloudflare": status}, {"cloudflare": {status: 1}}
 
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -196,6 +199,72 @@ class ActionDiagnosticsTests(unittest.TestCase):
             self.assertTrue(summary["complete"])
             self.assertEqual(summary["completed"], 4)
             self.assertEqual(summary["statuses"], counts)
+            self.assertIn("recent_domains_per_second", summary)
+            self.assertEqual(summary["resolver_outcomes"]["cloudflare"]["active"], 1)
+
+    @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
+    def test_dns_confirmation_requires_three_nxdomain_resolvers(self) -> None:
+        from rule_tools import dns_check
+
+        resolvers = {name: name for name, *_ in dns_check.RESOLVERS}
+        outcomes = {
+            "cloudflare": "nxdomain",
+            "google": "nxdomain",
+            "alidns": "nxdomain",
+            "dnspod": "timeout",
+        }
+
+        async def fake_query(domain: str, resolver: object) -> str:
+            del domain
+            return outcomes[str(resolver)]
+
+        with patch.object(dns_check, "query_one", new=fake_query):
+            status, evidence, attempts = asyncio.run(
+                dns_check.check_domain("candidate.example", resolvers)
+            )
+        self.assertEqual(status, "nxdomain")
+        self.assertEqual(evidence["dnspod"], "timeout")
+        self.assertEqual(attempts["dnspod"]["timeout"], 1)
+
+    @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
+    def test_dns_timeout_is_never_nxdomain(self) -> None:
+        from rule_tools import dns_check
+
+        resolvers = {name: name for name, *_ in dns_check.RESOLVERS}
+
+        async def fake_query(domain: str, resolver: object) -> str:
+            del domain, resolver
+            return "timeout"
+
+        with patch.object(dns_check, "query_one", new=fake_query):
+            status, _evidence, attempts = asyncio.run(
+                dns_check.check_domain("timeout.example", resolvers)
+            )
+        self.assertEqual(status, "unknown")
+        for name in resolvers:
+            self.assertEqual(attempts[name]["timeout"], 2)
+
+    @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
+    def test_dns_positive_fast_path_skips_confirmation_resolvers(self) -> None:
+        from rule_tools import dns_check
+
+        resolvers = {name: name for name, *_ in dns_check.RESOLVERS}
+        queried: list[str] = []
+
+        async def fake_query(domain: str, resolver: object) -> str:
+            del domain
+            name = str(resolver)
+            queried.append(name)
+            return "active" if name == "cloudflare" else "nxdomain"
+
+        with patch.object(dns_check, "query_one", new=fake_query):
+            status, evidence, _attempts = asyncio.run(
+                dns_check.check_domain("live.example", resolvers)
+            )
+        self.assertEqual(status, "active")
+        self.assertIn("cloudflare", evidence)
+        self.assertTrue(set(evidence) <= set(dns_check.PRIMARY_RESOLVERS))
+        self.assertNotIn("alidns", queried)
 
     def test_rejected_source_keeps_normalized_diagnostics(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
