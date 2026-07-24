@@ -49,13 +49,8 @@ def prepare_summary(path: Path) -> list[str]:
     data = load_object(path)
     source_counts = data.get("source_counts", {})
     profiles = data.get("raw_profiles", {})
-    region = data.get("region", {})
     shard_counts = data.get("shard_counts", [])
-    if (
-        not isinstance(source_counts, dict)
-        or not isinstance(profiles, dict)
-        or not isinstance(region, dict)
-    ):
+    if not isinstance(source_counts, dict) or not isinstance(profiles, dict):
         raise ValueError("Invalid prepare summary")
     if not isinstance(shard_counts, list):
         shard_counts = []
@@ -65,11 +60,6 @@ def prepare_summary(path: Path) -> list[str]:
         (
             f"{data.get('candidates', 0):,} unique candidates across "
             f"{data.get('shards', 0)} shards; {data.get('reward', 0):,} reward domains."
-        ),
-        (
-            f"Region classification: {region.get('cn_confirmed', 0):,} confirmed CN; "
-            f"{region.get('global_confirmed', 0):,} confirmed global; "
-            f"{region.get('unknown', 0):,} unknown (excluded from domestic profiles)."
         ),
         "",
         "| Source | Domains |",

@@ -10,15 +10,14 @@ kept in independent, user-controlled packs.
 
 | Region | Lean | Balanced | Strict |
 |---|---|---|---|
-| China-focused | `CN(Wei.G)` | `CN(Wei.G ∪ anti-AD)` | `CN(Wei.G ∪ anti-AD ∪ 217heidai)` |
-| Global | `HaGeZi ∩ StevenBlack - CN catalog` | `HaGeZi - CN catalog` | `HaGeZi ∪ StevenBlack - CN catalog` |
+| Domestic sources | `Wei.G ∩ anti-AD ∩ 217heidai` | `Wei.G ∩ anti-AD` | `Wei.G ∪ anti-AD ∪ 217heidai` |
+| Global sources | `HaGeZi ∩ StevenBlack - C` | `HaGeZi - C` | `HaGeZi ∪ StevenBlack - C` |
 
-`CN(X)` keeps only domains positively classified as China-related; uncertain
-domains are excluded from domestic profiles. Manual overrides, country TLDs,
-and maintained platform suffixes are auditable under `rules/region/`. Every
-global profile excludes `CN(Wei.G ∪ anti-AD ∪ 217heidai)`. Every normal profile
-excludes reward-ad domains and domains confirmed inactive by three consecutive
-weekly multi-resolver NXDOMAIN runs.
+Here `C = Wei.G ∪ anti-AD ∪ 217heidai`. “Domestic” describes the source group;
+no geographic domain classifier is applied. Every global profile excludes the
+complete `C` catalog. Every normal profile excludes reward-ad domains and
+domains confirmed inactive by three consecutive weekly multi-resolver
+NXDOMAIN runs.
 
 ## Use
 

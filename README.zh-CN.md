@@ -7,13 +7,12 @@
 
 | 地区 | 精简 | 平衡 | 严格 |
 |---|---|---|---|
-| 境内 | `CN(Wei.G)` | `CN(Wei.G ∪ anti-AD)` | `CN(Wei.G ∪ anti-AD ∪ 217heidai)` |
-| 境外 | `HaGeZi ∩ StevenBlack - 境内目录` | `HaGeZi - 境内目录` | `HaGeZi ∪ StevenBlack - 境内目录` |
+| 境内来源 | `Wei.G ∩ anti-AD ∩ 217heidai` | `Wei.G ∩ anti-AD` | `Wei.G ∪ anti-AD ∪ 217heidai` |
+| 境外来源 | `HaGeZi ∩ StevenBlack - C` | `HaGeZi - C` | `HaGeZi ∪ StevenBlack - C` |
 
-`CN(X)` 只保留明确确认属于境内的域名，地域未知项会从境内规则删除。人工
-覆盖、国家后缀和平台后缀均可在 `rules/region/`
-审计调整。全部境外配置都会减去 `CN(Wei.G ∪ anti-AD ∪ 217heidai)`；普通配置
-还会排除奖励广告，以及连续三周被多个 DNS 确认 NXDOMAIN 的域名。
+其中 `C = Wei.G ∪ anti-AD ∪ 217heidai`。“境内”仅表示规则来源分组，不进行
+域名地域识别。全部境外配置都会减去完整的 `C`；普通配置还会排除奖励广告，
+以及连续三周被多个 DNS 确认 NXDOMAIN 的域名。
 
 ## 使用
 

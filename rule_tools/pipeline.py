@@ -86,16 +86,13 @@ def compute_raw_profiles(
     hagezi_light: set[str],
     stevenblack: set[str],
     reward: set[str],
-    confirmed_cn: set[str],
 ) -> tuple[dict[str, set[str]], set[str]]:
-    cn_weig = weig & confirmed_cn
-    cn_balanced = (weig | anti_ad) & confirmed_cn
-    # Keep the complete regional catalog before reward/health subtraction so a
-    # China-classified reward or inactive domain can never leak into global.
-    cn_catalog = (weig | anti_ad | ad217_lite) & confirmed_cn
+    # "Domestic" is a source group, not geographic classification. The complete
+    # W/A/D catalog is excluded from every global profile.
+    cn_catalog = weig | anti_ad | ad217_lite
     profiles = {
-        "cn-lean": cn_weig - reward,
-        "cn-balanced": cn_balanced - reward,
+        "cn-lean": (weig & anti_ad & ad217_lite) - reward,
+        "cn-balanced": (weig & anti_ad) - reward,
         "cn-strict": cn_catalog - reward,
         "global-lean": (hagezi_light & stevenblack) - cn_catalog - reward,
         "global-balanced": hagezi_light - cn_catalog - reward,

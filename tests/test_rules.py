@@ -22,7 +22,6 @@ from rule_tools.pipeline import (
     validate_rule_caps,
 )
 from rule_tools.prepare import prepare
-from rule_tools.region import classify_regions
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,12 +45,11 @@ class ParsingTests(unittest.TestCase):
 class SetAlgebraTests(unittest.TestCase):
     def setUp(self) -> None:
         self.reward = {"reward.cn", "reward.global"}
-        self.weig = {"base.cn", "shared.cn", "reward.cn"}
-        self.anti = {"shared.cn", "anti.cn", "cross.example", "reward.cn"}
-        self.ad217 = {"strict.cn", "cross.example", "global-overlap.example"}
+        self.weig = {"base.cn", "shared.cn", "consensus.cn", "reward.cn"}
+        self.anti = {"shared.cn", "consensus.cn", "anti.cn", "cross.example", "reward.cn"}
+        self.ad217 = {"consensus.cn", "strict.cn", "cross.example", "global-overlap.example"}
         self.hagezi = {"global-overlap.example", "cross.example", "hagezi.global", "both.global"}
         self.steven = {"steven.global", "both.global", "reward.global"}
-        self.confirmed_cn = self.weig | self.anti | self.ad217
         self.profiles, self.cn_catalog = compute_raw_profiles(
             self.weig,
             self.anti,
@@ -59,7 +57,6 @@ class SetAlgebraTests(unittest.TestCase):
             self.hagezi,
             self.steven,
             self.reward,
-            self.confirmed_cn,
         )
 
     def test_profiles_are_monotonic(self) -> None:
@@ -75,57 +72,37 @@ class SetAlgebraTests(unittest.TestCase):
                 self.assertFalse(domains & self.cn_catalog, name)
 
     def test_expected_profile_meaning(self) -> None:
-        self.assertEqual(self.profiles["cn-lean"], {"base.cn", "shared.cn"})
-        self.assertIn("anti.cn", self.profiles["cn-balanced"])
+        self.assertEqual(self.profiles["cn-lean"], {"consensus.cn"})
+        self.assertIn("shared.cn", self.profiles["cn-balanced"])
+        self.assertNotIn("base.cn", self.profiles["cn-balanced"])
+        self.assertNotIn("anti.cn", self.profiles["cn-balanced"])
+        self.assertIn("anti.cn", self.profiles["cn-strict"])
         self.assertIn("strict.cn", self.profiles["cn-strict"])
         self.assertEqual(self.profiles["global-lean"], {"both.global"})
         self.assertIn("hagezi.global", self.profiles["global-balanced"])
         self.assertIn("steven.global", self.profiles["global-strict"])
 
     def test_inactive_is_removed_from_every_profile(self) -> None:
-        filtered = apply_inactive(self.profiles, {"base.cn", "both.global"})
-        self.assertNotIn("base.cn", filtered["cn-lean"])
+        filtered = apply_inactive(self.profiles, {"consensus.cn", "both.global"})
+        self.assertNotIn("consensus.cn", filtered["cn-lean"])
         self.assertNotIn("both.global", filtered["global-strict"])
 
-    def test_only_confirmed_cn_is_kept_in_domestic_profiles(self) -> None:
+    def test_complete_wad_catalog_is_excluded_from_global_profiles(self) -> None:
         profiles, cn_catalog = compute_raw_profiles(
-            {"base.cn", "unknown.example", "foreign.example.de"},
-            {"anti.cn", "foreign.example.de"},
-            {"strict.cn"},
+            {"shared.example", "unknown.example"},
+            {"shared.example", "unknown.example"},
+            {"shared.example", "unknown.example"},
             {"unknown.example", "foreign.example.de", "global.example"},
             {"unknown.example", "foreign.example.de", "global.example"},
             set(),
-            {"base.cn", "anti.cn", "strict.cn"},
         )
-        self.assertNotIn("foreign.example.de", cn_catalog)
-        self.assertNotIn("unknown.example", cn_catalog)
-        self.assertNotIn("foreign.example.de", profiles["cn-strict"])
-        self.assertNotIn("unknown.example", profiles["cn-strict"])
+        self.assertEqual(cn_catalog, {"shared.example", "unknown.example"})
+        self.assertEqual(
+            profiles["cn-lean"], {"shared.example", "unknown.example"}
+        )
+        self.assertIn("unknown.example", profiles["cn-strict"])
         self.assertIn("foreign.example.de", profiles["global-lean"])
-        self.assertIn("unknown.example", profiles["global-lean"])
-
-
-class RegionTests(unittest.TestCase):
-    def test_region_classifier_uses_cn_platforms_foreign_tlds_and_unknown(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            root = Path(temp_dir)
-            domains = {"sdk.qq.com", "ads.example.de", "unclassified.example"}
-            regions = classify_regions(root, domains)
-            self.assertEqual(regions.cn_confirmed, {"sdk.qq.com"})
-            self.assertEqual(regions.global_confirmed, {"ads.example.de"})
-            self.assertEqual(regions.unknown, {"unclassified.example"})
-
-    def test_manual_override_has_priority_over_suffix_heuristic(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            root = Path(temp_dir)
-            region = root / "rules/region"
-            region.mkdir(parents=True)
-            (region / "cn-overrides.domains").write_text(
-                "service.example.de\n", encoding="utf-8"
-            )
-            regions = classify_regions(root, {"service.example.de"})
-            self.assertEqual(regions.cn_confirmed, {"service.example.de"})
-            self.assertFalse(regions.global_confirmed)
+        self.assertNotIn("unknown.example", profiles["global-strict"])
 
 
 class HealthTests(unittest.TestCase):

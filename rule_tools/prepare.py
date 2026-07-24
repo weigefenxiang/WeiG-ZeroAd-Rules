@@ -6,7 +6,6 @@ from pathlib import Path
 
 from rule_tools.common import load_domains, stable_shard, write_domains, write_json
 from rule_tools.pipeline import compute_raw_profiles
-from rule_tools.region import classify_regions
 
 
 SOURCE_FILES = {
@@ -26,8 +25,6 @@ def prepare(root: Path, shards: int) -> dict[str, object]:
         source_id: load_domains(root / "staging/sources" / file_name)
         for source_id, file_name in SOURCE_FILES.items()
     }
-    universe = set().union(weig, reward, *sources.values())
-    regions = classify_regions(root, universe)
     raw_profiles, cn_catalog = compute_raw_profiles(
         weig,
         sources["anti-ad"],
@@ -35,29 +32,17 @@ def prepare(root: Path, shards: int) -> dict[str, object]:
         sources["hagezi-light"],
         sources["stevenblack"],
         reward,
-        regions.cn_confirmed,
     )
 
     profile_dir = root / "staging/profiles"
     for name, domains in raw_profiles.items():
         write_domains(profile_dir / f"{name}.domains", domains, ("Unfiltered build profile.",))
-    write_domains(root / "staging/cn-catalog.domains", cn_catalog, ("Stable domestic ownership catalog.",))
+    write_domains(
+        root / "staging/cn-catalog.domains",
+        cn_catalog,
+        ("Complete Wei.G, anti-AD, and 217heidai source catalog.",),
+    )
     write_domains(root / "staging/reward-ads.domains", reward, ("Independent reward-ad catalog.",))
-    write_domains(
-        root / "staging/region/cn-confirmed.domains",
-        regions.cn_confirmed,
-        ("Automatically or manually confirmed China-related domains.",),
-    )
-    write_domains(
-        root / "staging/region/global-confirmed.domains",
-        regions.global_confirmed,
-        ("Automatically or manually confirmed non-China domains.",),
-    )
-    write_domains(
-        root / "staging/region/unknown.domains",
-        regions.unknown,
-        ("Region not confirmed; excluded from CN(X).",),
-    )
 
     candidates = set().union(*raw_profiles.values(), reward)
     shard_sets = [set() for _ in range(shards)]
@@ -76,11 +61,6 @@ def prepare(root: Path, shards: int) -> dict[str, object]:
         "candidates": len(candidates),
         "reward": len(reward),
         "cn_catalog": len(cn_catalog),
-        "region": {
-            "cn_confirmed": len(regions.cn_confirmed),
-            "global_confirmed": len(regions.global_confirmed),
-            "unknown": len(regions.unknown),
-        },
         "source_counts": {
             "weig": len(weig),
             **{name: len(domains) for name, domains in sources.items()},
