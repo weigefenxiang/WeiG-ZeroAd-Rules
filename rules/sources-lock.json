@@ -1,0 +1,62 @@
+{
+  "generated_on": "2026-07-24",
+  "schema": 1,
+  "sources": [
+    {
+      "duplicates_removed": 0,
+      "expected_max_domains": 100000,
+      "expected_min_domains": 3000,
+      "id": "217heidai-lite",
+      "invalid_lines_ignored": 13,
+      "license": "GPL-3.0",
+      "name": "217heidai Hosts Lite",
+      "parsed_entries": 5105,
+      "sha256": "dbf5aec2f319c3081e31477a8cfa763b11ba03bb387cb2b0262ae2a63d47f7e6",
+      "unique_domains": 5105,
+      "url": "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt",
+      "within_expected_range": true
+    },
+    {
+      "duplicates_removed": 0,
+      "expected_max_domains": 1000000,
+      "expected_min_domains": 10000,
+      "id": "anti-ad",
+      "invalid_lines_ignored": 0,
+      "license": "MIT",
+      "name": "anti-AD domains",
+      "parsed_entries": 108328,
+      "sha256": "cdc292e1022c7207a3efed5e2c9ffbfc2d810b388ca8c07d489ba6b30bd1d543",
+      "unique_domains": 108328,
+      "url": "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-domains.txt",
+      "within_expected_range": true
+    },
+    {
+      "duplicates_removed": 0,
+      "expected_max_domains": 500000,
+      "expected_min_domains": 10000,
+      "id": "hagezi-light",
+      "invalid_lines_ignored": 0,
+      "license": "GPL-3.0",
+      "name": "HaGeZi Multi Light",
+      "parsed_entries": 89246,
+      "sha256": "3679436b6140f756643579fbcdd78ddaa01633a91028130cb4d99925f2ea4a93",
+      "unique_domains": 89246,
+      "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/light.txt",
+      "within_expected_range": true
+    },
+    {
+      "duplicates_removed": 1,
+      "expected_max_domains": 1000000,
+      "expected_min_domains": 10000,
+      "id": "stevenblack",
+      "invalid_lines_ignored": 14,
+      "license": "MIT",
+      "name": "StevenBlack unified hosts",
+      "parsed_entries": 93158,
+      "sha256": "0bd73cb6c524a1dd71afa0d4f764beebc9f14f97bbad3122ad01225f56017ab9",
+      "unique_domains": 93157,
+      "url": "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+      "within_expected_range": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# Independent reward-ad blocking pack.
+# pack_id=reward.other
+# rule_version=2026072401
+# rule_count=13
+adx-bj-req.anythinktech.com
+adx-bj.anythinktech.com
+adx.anythinktech.com
+cn-api.anythinktech.com
+cn-tk.anythinktech.com
+dc.sigmob.cn
+gw.365you.com
+nadvideo.baidu.com
+nadvideo2.baidu.com
+pgdt.ugdtimg.com
+pv.sohu.com
+tk.anythinktech.com
+x.adnet.qq.com

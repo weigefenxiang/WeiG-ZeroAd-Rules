@@ -1,0 +1,46 @@
+{
+  "packs": [
+    {
+      "default_enabled": true,
+      "domains_sha256": "d3cf2d7897b2a8e0bc8c8b1a9d744fbcd1a872b2a2e209e6c7c10fd3b038b58b",
+      "file": "reward-tencent.domains",
+      "id": "reward.tencent",
+      "rules": 38,
+      "title_en": "Tencent / QQ reward ads",
+      "title_zh": "腾讯 / QQ 奖励广告",
+      "type": "reward_block"
+    },
+    {
+      "default_enabled": true,
+      "domains_sha256": "f7c6a56def378d0a05e44c3d63332f4e54db010a8446784dbbcc1f9c64f991af",
+      "file": "reward-wechat.domains",
+      "id": "reward.wechat",
+      "rules": 8,
+      "title_en": "WeChat reward ads",
+      "title_zh": "微信奖励广告",
+      "type": "reward_block"
+    },
+    {
+      "default_enabled": true,
+      "domains_sha256": "97c272967e18d71a4bacd1e3b59a36f8715efa4b8a03281200c4b490ae0093a5",
+      "file": "reward-short-video.domains",
+      "id": "reward.short-video",
+      "rules": 15,
+      "title_en": "Short-video reward ads",
+      "title_zh": "短视频奖励广告",
+      "type": "reward_block"
+    },
+    {
+      "default_enabled": true,
+      "domains_sha256": "af6788f01b4a2197afbf4be17015151d84bf43f57472d57959a93893123a649c",
+      "file": "reward-other.domains",
+      "id": "reward.other",
+      "rules": 13,
+      "title_en": "Other reward ads",
+      "title_zh": "其他奖励广告",
+      "type": "reward_block"
+    }
+  ],
+  "schema": 1,
+  "version": 2026072401
+}

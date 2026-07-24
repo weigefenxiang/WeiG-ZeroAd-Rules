@@ -1,0 +1,42 @@
+# Independent reward-ad blocking pack.
+# pack_id=reward.tencent
+# rule_version=2026072401
+# rule_count=38
+ad.tencentmusic.com
+adcdn.tencentmusic.com
+adclick.tencentmusic.com
+adexpo.tencentmusic.com
+adsmind.gdtimg.com
+adstats.tencentmusic.com
+c.gdt.qq.com
+c2.gdt.qq.com
+d.gdt.qq.com
+h5.gdt.qq.com
+i.gdt.qq.com
+ii.gdt.qq.com
+ipv4.gdt.qq.com
+m.gdt.qq.com
+mi.gdt.qq.com
+mtt.eve.mdt.qq.com
+mtt.str.mdt.qq.com
+nc.gdt.qq.com
+oth.eve.mdt.qq.com
+oth.str.mdt.qq.com
+oth.update.mdt.qq.com
+pgdt.gtimg.cn
+q.i.gdt.qq.com
+rm.gdt.qq.com
+rpt.gdt.qq.com
+sdk.e.qq.com
+t.gdt.qq.com
+tangram.e.qq.com
+tmead.y.qq.com
+tmeadbak.y.qq.com
+tmeadcomm.y.qq.com
+v.gdt.qq.com
+v2.gdt.qq.com
+v3.gdt.qq.com
+v6ii.gdt.qq.com
+vr.gdt.qq.com
+win.gdt.qq.com
+xc.gdt.qq.com
