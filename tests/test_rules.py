@@ -13,11 +13,13 @@ from rule_tools.build_release import build, release_files
 from rule_tools.common import domains_from_line, load_domains, normalize_domain
 from rule_tools.fetch_source import fetch_one
 from rule_tools.pipeline import (
+    PROFILE_RULE_CAPS,
     PROFILE_NAMES,
     apply_inactive,
     compute_raw_profiles,
     materialize,
     update_health_state,
+    validate_rule_caps,
 )
 from rule_tools.prepare import prepare
 from rule_tools.region import classify_regions
@@ -165,6 +167,17 @@ class HealthTests(unittest.TestCase):
                 root, raw, {"reward.example"}, statuses, dt.date(2026, 7, 23)
             )
             self.assertEqual(manifest["reward"]["rules"], 0)
+
+    def test_profile_specific_safety_caps_accept_boundary_and_reject_overflow(self) -> None:
+        self.assertEqual(PROFILE_RULE_CAPS["global-strict"], 250_000)
+        self.assertGreater(PROFILE_RULE_CAPS["global-strict"], 173_840)
+        profiles = {name: set() for name in PROFILE_NAMES}
+        profiles["global-strict"] = {f"{index}.example" for index in range(5)}
+        with patch.dict(PROFILE_RULE_CAPS, {"global-strict": 5}):
+            validate_rule_caps(profiles, set())
+            profiles["global-strict"].add("overflow.example")
+            with self.assertRaisesRegex(ValueError, "global-strict exceeds"):
+                validate_rule_caps(profiles, set())
 
 
 class ActionDiagnosticsTests(unittest.TestCase):

@@ -100,18 +100,24 @@ def release_summary(path: Path) -> list[str]:
     lines = [
         f"## Rules release `{data.get('version', '-')}`",
         "",
-        "| Region | Lean | Balanced | Strict |",
+        "| Profile | Rules | Safety cap | Usage |",
         "|---|---:|---:|---:|",
     ]
     for region in ("cn", "global"):
         levels = profiles.get(region, {})
         if not isinstance(levels, dict):
             levels = {}
-        counts = []
         for level in ("lean", "balanced", "strict"):
             entry = levels.get(level, {})
-            counts.append(entry.get("rules", 0) if isinstance(entry, dict) else 0)
-        lines.append(f"| {region} | {counts[0]:,} | {counts[1]:,} | {counts[2]:,} |")
+            if not isinstance(entry, dict):
+                entry = {}
+            count = int(entry.get("rules", 0))
+            cap = int(entry.get("safety_cap", 0))
+            usage = count / cap if cap else 0
+            warning = " ⚠️" if bool(entry.get("near_safety_cap")) else ""
+            lines.append(
+                f"| `{region}-{level}`{warning} | {count:,} | {cap:,} | {usage:.1%} |"
+            )
     statuses = health.get("statuses", {})
     if not isinstance(statuses, dict):
         statuses = {}
@@ -125,9 +131,18 @@ def release_summary(path: Path) -> list[str]:
                 f"{statuses.get('unknown', 0):,}; confirmed inactive "
                 f"{health.get('confirmed_inactive', 0):,}."
             ),
-            f"Independent reward rules: {data.get('reward', {}).get('rules', 0):,}.",
+            (
+                f"Independent reward rules: {data.get('reward', {}).get('rules', 0):,} / "
+                f"{data.get('reward', {}).get('safety_cap', 0):,}."
+            ),
         )
     )
+    if any(
+        isinstance(entry, dict) and bool(entry.get("near_safety_cap"))
+        for levels in profiles.values() if isinstance(levels, dict)
+        for entry in levels.values()
+    ) or bool(data.get("reward", {}).get("near_safety_cap")):
+        lines.extend(("", "⚠️ One or more rule sets use at least 80% of their safety cap."))
     return lines
 
 

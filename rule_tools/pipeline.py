@@ -15,6 +15,17 @@ PROFILE_NAMES = (
     "global-strict",
 )
 
+PROFILE_RULE_CAPS = {
+    "cn-lean": 200_000,
+    "cn-balanced": 200_000,
+    "cn-strict": 200_000,
+    "global-lean": 150_000,
+    "global-balanced": 200_000,
+    "global-strict": 250_000,
+}
+REWARD_RULE_CAP = 10_000
+CAP_WARNING_RATIO = 0.80
+
 REWARD_PACKS = (
     {
         "id": "reward.tencent",
@@ -116,6 +127,22 @@ def validate_profiles(
             raise ValueError(f"Domestic domains leaked into {name}")
 
 
+def validate_rule_caps(
+    profiles: dict[str, set[str]], reward: set[str]
+) -> None:
+    for name, cap in PROFILE_RULE_CAPS.items():
+        count = len(profiles[name])
+        if count > cap:
+            raise ValueError(
+                f"{name} exceeds the {cap} rule safety cap: {count}"
+            )
+    if len(reward) > REWARD_RULE_CAP:
+        raise ValueError(
+            f"reward rules exceed the {REWARD_RULE_CAP} rule safety cap: "
+            f"{len(reward)}"
+        )
+
+
 def apply_inactive(
     raw_profiles: dict[str, set[str]], inactive: set[str]
 ) -> dict[str, set[str]]:
@@ -171,12 +198,7 @@ def materialize(
     reward = reward - inactive
     cn_catalog = raw_profiles["cn-strict"]
     validate_profiles(profiles, reward, cn_catalog)
-
-    if len(profiles["global-strict"]) > 150_000:
-        raise ValueError(
-            f"Global strict exceeds the 150000 rule safety cap: "
-            f"{len(profiles['global-strict'])}"
-        )
+    validate_rule_caps(profiles, reward)
     previous_manifest_path = root / "rules/generated/manifest.json"
     if previous_manifest_path.exists():
         previous_manifest = load_json(previous_manifest_path)
@@ -255,6 +277,10 @@ def materialize(
         hosts_path = generated / f"{name}.hosts"
         profile_manifest[region][level] = {
             "rules": len(domains),
+            "safety_cap": PROFILE_RULE_CAPS[name],
+            "near_safety_cap": (
+                len(domains) >= PROFILE_RULE_CAPS[name] * CAP_WARNING_RATIO
+            ),
             "domains_file": domain_path.name,
             "hosts_file": hosts_path.name,
             "domains_sha256": sha256_file(domain_path),
@@ -282,6 +308,8 @@ def materialize(
         "profiles": profile_manifest,
         "reward": {
             "rules": len(reward),
+            "safety_cap": REWARD_RULE_CAP,
+            "near_safety_cap": len(reward) >= REWARD_RULE_CAP * CAP_WARNING_RATIO,
             "domains_file": "reward-ads.domains",
             "domains_sha256": sha256_file(generated / "reward-ads.domains"),
         },

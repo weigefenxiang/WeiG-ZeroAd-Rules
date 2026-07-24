@@ -10,8 +10,9 @@ on:
       - "rules/sources-lock.json"
       - "rules/version.txt"
   schedule:
-    # Sunday 03:00 Asia/Singapore (Saturday 19:00 UTC).
-    - cron: "0 19 * * 6"
+    # Monday 03:37 US Pacific time; off the hourly GitHub Actions load peak.
+    - cron: "37 3 * * 1"
+      timezone: "America/Los_Angeles"
   workflow_dispatch:
 
 permissions:
