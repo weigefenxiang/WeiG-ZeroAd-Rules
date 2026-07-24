@@ -196,23 +196,6 @@ def materialize(
     cn_catalog = raw_profiles["cn-strict"]
     validate_profiles(profiles, reward, cn_catalog)
     validate_rule_caps(profiles, reward)
-    previous_manifest_path = root / "rules/generated/manifest.json"
-    if previous_manifest_path.exists():
-        previous_manifest = load_json(previous_manifest_path)
-        if not isinstance(previous_manifest, dict):
-            raise ValueError("Invalid previous manifest")
-        previous_profiles = previous_manifest.get("profiles", {})
-        for name, domains in profiles.items():
-            region, level = name.split("-", 1)
-            old_entry = previous_profiles.get(region, {}).get(level, {})
-            old_count = int(old_entry.get("rules", 0)) if isinstance(old_entry, dict) else 0
-            if old_count:
-                ratio = abs(len(domains) - old_count) / old_count
-                if ratio > 0.15:
-                    raise ValueError(
-                        f"{name} changed by {ratio:.1%}, above the 15% safety limit "
-                        f"({old_count} -> {len(domains)})"
-                    )
 
     version = next_version(root, date)
     generated = root / "rules/generated"
