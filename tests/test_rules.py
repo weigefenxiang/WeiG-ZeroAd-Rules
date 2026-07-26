@@ -159,6 +159,19 @@ class HealthTests(unittest.TestCase):
 
 
 class ActionDiagnosticsTests(unittest.TestCase):
+    def test_dns_uses_bounded_workers_and_only_publish_can_write(self) -> None:
+        dns_source = (ROOT / "rule_tools/dns_check.py").read_text(encoding="utf-8")
+        workflow = (ROOT / ".github/workflows/rules.yml").read_text(encoding="utf-8")
+        self.assertIn("queue: asyncio.Queue[str]", dns_source)
+        self.assertIn('name=f"dns-worker-{index:02d}"', dns_source)
+        self.assertNotIn(
+            "tasks = [asyncio.create_task(guarded(domain)) for domain in domains]",
+            dns_source,
+        )
+        self.assertLess(workflow.index("contents: read"), workflow.index("jobs:"))
+        publish = workflow.index("  publish:")
+        self.assertIn("contents: write", workflow[publish:])
+
     @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
     def test_dns_check_streams_results_and_writes_summary(self) -> None:
         from rule_tools import dns_check
@@ -201,6 +214,33 @@ class ActionDiagnosticsTests(unittest.TestCase):
             self.assertEqual(summary["statuses"], counts)
             self.assertIn("recent_domains_per_second", summary)
             self.assertEqual(summary["resolver_outcomes"]["cloudflare"]["active"], 1)
+
+    @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
+    def test_dns_check_uses_a_bounded_worker_pool(self) -> None:
+        from rule_tools import dns_check
+
+        active = 0
+        maximum = 0
+
+        async def fake_check(
+            domain: str, resolvers: object
+        ) -> tuple[str, dict[str, str], dict[str, dict[str, int]]]:
+            nonlocal active, maximum
+            del domain, resolvers
+            active += 1
+            maximum = max(maximum, active)
+            await asyncio.sleep(0.001)
+            active -= 1
+            return "active", {"cloudflare": "active"}, {
+                "cloudflare": {"active": 1}
+            }
+
+        domains = [f"{index}.example" for index in range(100)]
+        with patch.object(dns_check, "check_domain", new=fake_check):
+            results = asyncio.run(dns_check.run_checks(domains, concurrency=4))
+        self.assertEqual(len(results), len(domains))
+        self.assertLessEqual(maximum, 4)
+        self.assertGreater(maximum, 1)
 
     @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
     def test_dns_confirmation_requires_three_nxdomain_resolvers(self) -> None:

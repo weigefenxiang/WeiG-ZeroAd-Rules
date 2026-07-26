@@ -144,29 +144,44 @@ async def run_checks(
 ) -> list[dict[str, object]]:
     if concurrency < 1 or concurrency > 64:
         raise ValueError("concurrency must be between 1 and 64")
-    semaphore = asyncio.Semaphore(concurrency)
     resolvers = {
         name: make_resolver(address, timeout, lifetime)
         for name, address, timeout, lifetime in RESOLVERS
     }
-
-    async def guarded(domain: str) -> dict[str, object]:
-        async with semaphore:
-            status, evidence, attempts = await check_domain(domain, resolvers)
-            return {
-                "domain": domain,
-                "status": status,
-                "evidence": evidence,
-                "attempts": attempts,
-            }
-
-    tasks = [asyncio.create_task(guarded(domain)) for domain in domains]
+    queue: asyncio.Queue[str] = asyncio.Queue()
+    for domain in domains:
+        queue.put_nowait(domain)
     results: list[dict[str, object]] = []
-    for task in asyncio.as_completed(tasks):
-        result = await task
-        results.append(result)
-        if on_result is not None:
-            on_result(result, len(results), len(domains))
+    completed = 0
+
+    async def worker() -> None:
+        nonlocal completed
+        while True:
+            try:
+                domain = queue.get_nowait()
+            except asyncio.QueueEmpty:
+                return
+            try:
+                status, evidence, attempts = await check_domain(domain, resolvers)
+                result: dict[str, object] = {
+                    "domain": domain,
+                    "status": status,
+                    "evidence": evidence,
+                    "attempts": attempts,
+                }
+                results.append(result)
+                completed += 1
+                if on_result is not None:
+                    on_result(result, completed, len(domains))
+            finally:
+                queue.task_done()
+
+    workers = [
+        asyncio.create_task(worker(), name=f"dns-worker-{index:02d}")
+        for index in range(min(concurrency, max(len(domains), 1)))
+    ]
+    if workers:
+        await asyncio.gather(*workers)
     return sorted(results, key=lambda item: str(item["domain"]))
 
 
