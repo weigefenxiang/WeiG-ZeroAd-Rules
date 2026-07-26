@@ -1,7 +1,7 @@
 # WeiG ZeroAd generated hosts file. DO NOT EDIT.
 # profile=global-lean
-# rule_version=2026072501
-# rule_count=3859
+# rule_version=2026072601
+# rule_count=3849
 127.0.0.1 localhost
 ::1 localhost ip6-localhost ip6-loopback
 0.0.0.0 0.athwartwhoafat.com
@@ -67,6 +67,7 @@
 0.0.0.0 4422.api.swrve.com
 0.0.0.0 4422.content.swrve.com
 0.0.0.0 4448269.fls.doubleclick.net
+0.0.0.0 4706.api.swrve.com
 0.0.0.0 47e224be59415ec068b94bca857581bd7dde7fb6.cws.conviva.com
 0.0.0.0 489a19fa-d831-4954-858d-46436d5cdb20.event.collector.scopely.io
 0.0.0.0 4imprint.com.102.112.2o7.net
@@ -314,7 +315,6 @@
 0.0.0.0 adizio.com
 0.0.0.0 adkontekst.pl
 0.0.0.0 adland.ru
-0.0.0.0 adlanding.admarketplace.net.akadns.net
 0.0.0.0 adlik.akavita.com
 0.0.0.0 adloox.com
 0.0.0.0 adlpo.com
@@ -323,11 +323,13 @@
 0.0.0.0 admeld.com
 0.0.0.0 admeme.net
 0.0.0.0 admin.appnext.com
+0.0.0.0 admin.giaminhmedia.vn
 0.0.0.0 admixer.co.kr
 0.0.0.0 adn.ebay.com
 0.0.0.0 adn.impactradius.com
 0.0.0.0 adnet.asahi.com
 0.0.0.0 adnetasia.com
+0.0.0.0 adnetwork-core-lb7.aiactiv.io
 0.0.0.0 adnetwork-core.aiactiv.io
 0.0.0.0 adnetwork.adasiaholdings.com
 0.0.0.0 adnetwork.vn
@@ -445,7 +447,6 @@
 0.0.0.0 analytic.detik.com
 0.0.0.0 analyticsnew.overwolf.com
 0.0.0.0 analyticssystems.net
-0.0.0.0 analyzer54.fc2.com
 0.0.0.0 android.giveapp.jp
 0.0.0.0 anet.tradedoubler.com
 0.0.0.0 anstrex.com
@@ -583,7 +584,6 @@
 0.0.0.0 autocontext.begun.ru
 0.0.0.0 autozone.com.102.122.2o7.net
 0.0.0.0 aux.fqtag.com
-0.0.0.0 avalaraprod.112.2o7.net
 0.0.0.0 avd.innity.com
 0.0.0.0 avd.innity.net
 0.0.0.0 avocarrot.com
@@ -628,7 +628,6 @@
 0.0.0.0 be.sitestat.com
 0.0.0.0 bea4.v.fwmrm.net
 0.0.0.0 beachfront.com
-0.0.0.0 beacon-1.newrelic.com
 0.0.0.0 beacon-cdn-custom.walmart.com.akadns.net
 0.0.0.0 beacon-cdn.walmart.com.akadns.net
 0.0.0.0 beacon-nf.rubiconproject.com
@@ -689,7 +688,6 @@
 0.0.0.0 bluestreak.com
 0.0.0.0 bm.adentifi.com
 0.0.0.0 bmedia.justservingfiles.net
-0.0.0.0 bms.zeptolab.com
 0.0.0.0 bmwmotor.122.2o7.net
 0.0.0.0 bob.dmpxs.com
 0.0.0.0 bongacash.com
@@ -1058,11 +1056,8 @@
 0.0.0.0 collect.tealiumiq.com
 0.0.0.0 collection.decibelinsight.net
 0.0.0.0 collector-1054.tvsquared.com
-0.0.0.0 collector.capturly.com
 0.0.0.0 collector.cdp.cnn.com
-0.0.0.0 collector.effectivemeasure.net
 0.0.0.0 collector.leaddyno.com
-0.0.0.0 collector.snplow.net
 0.0.0.0 collectoru.us.tvsquared.com
 0.0.0.0 colorfulnotebooks.com
 0.0.0.0 combine.asnapieu.com
@@ -1232,6 +1227,7 @@
 0.0.0.0 delivery.yomedia.vn
 0.0.0.0 deloton.com
 0.0.0.0 deltago.com
+0.0.0.0 demo.yomedia.vn
 0.0.0.0 depart.trinitymedia.ai
 0.0.0.0 deqik.com
 0.0.0.0 detect.rayjump.com
@@ -1287,7 +1283,6 @@
 0.0.0.0 dptr.areyouahuman.com
 0.0.0.0 dpu.samsungelectronics.com
 0.0.0.0 dr.socdm.com
-0.0.0.0 dragerwerk.122.2o7.net
 0.0.0.0 ds.eclick.vn
 0.0.0.0 ds.reson8.com
 0.0.0.0 dsp-creative.demandbase.com
@@ -1311,7 +1306,6 @@
 0.0.0.0 dynamic.criteo.com
 0.0.0.0 dynamic.rakuten.co.jp
 0.0.0.0 e-flirt24.pl
-0.0.0.0 e.connectad.io
 0.0.0.0 e.de.inmobi.com
 0.0.0.0 e.dtscout.com
 0.0.0.0 e.serverbid.com
@@ -1441,7 +1435,6 @@
 0.0.0.0 filmow.pl
 0.0.0.0 filter.adxfactory.com
 0.0.0.0 filter.ezmob.com
-0.0.0.0 filter.mediacpc.com
 0.0.0.0 financial.org
 0.0.0.0 finmaxfx.com
 0.0.0.0 firecash.org
@@ -1484,6 +1477,7 @@
 0.0.0.0 frtn.socdm.com
 0.0.0.0 funnel-assets.startappservice.com
 0.0.0.0 funnelscripts.com
+0.0.0.0 funtoyplanet.com
 0.0.0.0 futurenet.club
 0.0.0.0 fwcdn1.com
 0.0.0.0 fyxm.net
@@ -1536,6 +1530,7 @@
 0.0.0.0 getrunkhomuto.info
 0.0.0.0 gezinti.com
 0.0.0.0 gg146.bet
+0.0.0.0 ggbet-pl.com
 0.0.0.0 ggbet.world
 0.0.0.0 ggbetpromo.com
 0.0.0.0 ggbets.pl
@@ -1597,6 +1592,7 @@
 0.0.0.0 groundtruth.com
 0.0.0.0 gsgir.122.2o7.net
 0.0.0.0 gslbeacon.lijit.com
+0.0.0.0 gtm.saostar.vn
 0.0.0.0 gtrack.kueezrtb.com
 0.0.0.0 gurgle.zdbb.net
 0.0.0.0 gusion.space
@@ -1692,6 +1688,7 @@
 0.0.0.0 ib.sin1.geoadnxs.com
 0.0.0.0 ibeat.indiatimes.com
 0.0.0.0 ic.tynt.com
+0.0.0.0 ice-casino-games.pl
 0.0.0.0 ice-casino-online.com
 0.0.0.0 ice-casino34.com
 0.0.0.0 iceccasino.pl
@@ -1829,8 +1826,6 @@
 0.0.0.0 irr.ru
 0.0.0.0 it-gmtdmp.mookie1.com
 0.0.0.0 itim.vn
-0.0.0.0 itnuzleafan.com
-0.0.0.0 ivdmlqrb.shop
 0.0.0.0 iwad.cachefly.net
 0.0.0.0 j.adlooxtracking.com
 0.0.0.0 j.amoad.com
@@ -2226,6 +2221,7 @@
 0.0.0.0 nan.netmng.com
 0.0.0.0 nanda.vn
 0.0.0.0 nasdacoin.io
+0.0.0.0 naszarecepta.pl
 0.0.0.0 nation-news.com
 0.0.0.0 native.sharethrough.com
 0.0.0.0 nav.telematicsdirect.com
@@ -2263,7 +2259,6 @@
 0.0.0.0 numpet.com
 0.0.0.0 nutanixprod.112.2o7.net
 0.0.0.0 nxcount.com
-0.0.0.0 nychi2.outbrain.org
 0.0.0.0 nytimes-d.openx.net
 0.0.0.0 o-adq.mediation.unity3d.com
 0.0.0.0 o-iab-imp-counters.mediation.unity3d.com
@@ -2274,8 +2269,6 @@
 0.0.0.0 oas.repubblica.it
 0.0.0.0 oascentral.sfgate.com
 0.0.0.0 oascentral.zwire.com
-0.0.0.0 oauth.datorama.com
-0.0.0.0 obin.distinctrobin.com
 0.0.0.0 objects.tremormedia.com
 0.0.0.0 observe-tcp.mtgglobals.com
 0.0.0.0 oceancloudhosts.com
@@ -2316,7 +2309,6 @@
 0.0.0.0 otherlevels.com
 0.0.0.0 our.affiliatetracking.net
 0.0.0.0 ourtoolbar.com
-0.0.0.0 out.usbla.net
 0.0.0.0 outbrainimg.com.edgekey.net
 0.0.0.0 ov.yahoo.co.jp
 0.0.0.0 ovp.iris.tv
@@ -2366,7 +2358,6 @@
 0.0.0.0 pf.tradedoubler.com
 0.0.0.0 pfa.levexis.com
 0.0.0.0 pg-prebid-server.rubiconproject.com
-0.0.0.0 ph-cdn.effectivemeasure.net
 0.0.0.0 ph-gmtdmp.mookie1.com
 0.0.0.0 phanquang.vn
 0.0.0.0 pheedo.com
@@ -2507,7 +2498,7 @@
 0.0.0.0 prov.alphonso.tv
 0.0.0.0 proximitykit.radiusnetworks.com
 0.0.0.0 proxyjs.brdtnet.com
-0.0.0.0 proxyjs.bright-sdk.com
+0.0.0.0 proxyjs.luminatinet.com
 0.0.0.0 ps.eyeota.net
 0.0.0.0 ps.l.admedo.com
 0.0.0.0 pscontent.playstream.media
@@ -2834,7 +2825,6 @@
 0.0.0.0 simage2.pubmatic.com
 0.0.0.0 simplifi.partners.tremorhub.com
 0.0.0.0 sin.creativecdn.com
-0.0.0.0 sin1.geoadnxs.com
 0.0.0.0 sin3-ib.sin1.geoadnxs.com
 0.0.0.0 sinkhole.netmng.com
 0.0.0.0 siterecruit.comscore.com
@@ -2982,7 +2972,6 @@
 0.0.0.0 static.leadpages.net
 0.0.0.0 static.mepuzz.com
 0.0.0.0 static.mobilemonkey.com
-0.0.0.0 static.mparticle.com
 0.0.0.0 static.nanda.vn
 0.0.0.0 static.narrativ.com
 0.0.0.0 static.philacct.com
@@ -3008,6 +2997,7 @@
 0.0.0.0 static.zucks.net.zimg.jp
 0.0.0.0 static1.intrack.ir
 0.0.0.0 static2.chartbeat.com
+0.0.0.0 statistics.vov.vn
 0.0.0.0 stats-5-split-vohnu.s.innovid.com.akadns.net
 0.0.0.0 stats-collector.cxense.com
 0.0.0.0 stats.abbi.io
@@ -3113,7 +3103,6 @@
 0.0.0.0 t.smartads.tech
 0.0.0.0 t.svtrd.com
 0.0.0.0 t.trackedlink.net
-0.0.0.0 t.vacations.disneydestinations.com
 0.0.0.0 t.visitorqueue.com
 0.0.0.0 t.wowanalytics.co.uk
 0.0.0.0 t0.c.appier.net
@@ -3133,6 +3122,7 @@
 0.0.0.0 tag.crsspxl.com
 0.0.0.0 tag.demandbase.com
 0.0.0.0 tag.durationmedia.net
+0.0.0.0 tag.gammaplatform.com
 0.0.0.0 tag.marinsm.com
 0.0.0.0 tag.navdmp.com
 0.0.0.0 tag.perfectaudience.com
@@ -3274,6 +3264,7 @@
 0.0.0.0 tracking.pandoiq.com
 0.0.0.0 tracking.pushcrew.com
 0.0.0.0 tracking.retargeting.biz
+0.0.0.0 tracking.saostar.vn
 0.0.0.0 tracking.taboola.com
 0.0.0.0 tracking.vcommission.com
 0.0.0.0 tracking.vietnamnetad.vn
@@ -3282,6 +3273,7 @@
 0.0.0.0 tracking22.com
 0.0.0.0 trackingapi.foody.vn
 0.0.0.0 trackingsoft.com
+0.0.0.0 trackity.tiki.vn
 0.0.0.0 tracknet.twyn.com
 0.0.0.0 tradecore.tradehouse.media
 0.0.0.0 trafficgate.net
@@ -3300,7 +3292,7 @@
 0.0.0.0 trends.revcontent.com
 0.0.0.0 trj.valuecommerce.com
 0.0.0.0 trk.atomex.net
-0.0.0.0 trk.kissmetrics.com
+0.0.0.0 trk.games-to-run123.com
 0.0.0.0 trk42.net
 0.0.0.0 true-counter.com
 0.0.0.0 truex.com
@@ -3378,7 +3370,6 @@
 0.0.0.0 v2.dc.yieldify.com
 0.0.0.0 v2.pixel.newscgp.com
 0.0.0.0 v2st.shinobi.jp
-0.0.0.0 v6analytics.htmedia.in.edgekey.net
 0.0.0.0 v7.cdn.onthe.io
 0.0.0.0 va-g2.gumgum.com
 0.0.0.0 va-lb.gumgum.com
@@ -3540,7 +3531,6 @@
 0.0.0.0 ws.sessioncam.com
 0.0.0.0 wserver.vidazoo.com
 0.0.0.0 wsod.com
-0.0.0.0 wtp101.com
 0.0.0.0 www.00fun.com
 0.0.0.0 www.0stats.com
 0.0.0.0 www.123count.com
@@ -3783,7 +3773,6 @@
 0.0.0.0 www.w3counter.com
 0.0.0.0 www.web-stat.com
 0.0.0.0 www.webcounter.com
-0.0.0.0 www.webspectator.com
 0.0.0.0 www.webstat.com
 0.0.0.0 www.webstats4u.com
 0.0.0.0 www.webtraxs.com
@@ -3831,6 +3820,7 @@
 0.0.0.0 xl-trk.com
 0.0.0.0 xml.adxfactory.com
 0.0.0.0 xml.affiliate.rakuten.co.jp
+0.0.0.0 xml.ezmob.com
 0.0.0.0 xn--discrd-zxa.com
 0.0.0.0 xoomer.alice.it
 0.0.0.0 xplusone.com

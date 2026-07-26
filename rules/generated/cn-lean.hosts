@@ -1,7 +1,7 @@
 # WeiG ZeroAd generated hosts file. DO NOT EDIT.
 # profile=cn-lean
-# rule_version=2026072501
-# rule_count=638
+# rule_version=2026072601
+# rule_count=637
 127.0.0.1 localhost
 ::1 localhost ip6-localhost ip6-loopback
 0.0.0.0 360ads.com
@@ -123,7 +123,6 @@
 0.0.0.0 ads3-normal-lf.zijieapi.com
 0.0.0.0 ads3-normal-lq.zijieapi.com
 0.0.0.0 ads3-normal.zijieapi.com
-0.0.0.0 ads360.cn
 0.0.0.0 ads5-normal-hl.zijieapi.com
 0.0.0.0 ads5-normal-lf.zijieapi.com
 0.0.0.0 ads5-normal-lq.zijieapi.com

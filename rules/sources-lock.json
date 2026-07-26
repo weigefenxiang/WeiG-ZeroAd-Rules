@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-07-25",
+  "generated_on": "2026-07-26",
   "schema": 1,
   "sources": [
     {
@@ -10,9 +10,9 @@
       "invalid_lines_ignored": 13,
       "license": "GPL-3.0",
       "name": "217heidai Hosts Lite",
-      "parsed_entries": 5105,
-      "sha256": "dbf5aec2f319c3081e31477a8cfa763b11ba03bb387cb2b0262ae2a63d47f7e6",
-      "unique_domains": 5105,
+      "parsed_entries": 5110,
+      "sha256": "c38285713e8d81b34cc4bdf15b2d8f3561dd1ec686834767bdcc7b5a1270bc65",
+      "unique_domains": 5110,
       "url": "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt",
       "within_expected_range": true
     },
@@ -24,9 +24,9 @@
       "invalid_lines_ignored": 0,
       "license": "MIT",
       "name": "anti-AD domains",
-      "parsed_entries": 108328,
-      "sha256": "cdc292e1022c7207a3efed5e2c9ffbfc2d810b388ca8c07d489ba6b30bd1d543",
-      "unique_domains": 108328,
+      "parsed_entries": 108820,
+      "sha256": "9bbff068d13a6e3d40086dc93de355809a52e3725644290926c711d51de5b898",
+      "unique_domains": 108820,
       "url": "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-domains.txt",
       "within_expected_range": true
     },
@@ -38,9 +38,9 @@
       "invalid_lines_ignored": 0,
       "license": "GPL-3.0",
       "name": "HaGeZi Multi Light",
-      "parsed_entries": 89249,
-      "sha256": "fc9dcd4ffe9d3d49b5d7c998a5dc2f571dfcd244998f476c1c9fffdd014b06db",
-      "unique_domains": 89249,
+      "parsed_entries": 88801,
+      "sha256": "19a224840154da6ca8c7049500517d980925fb678334ee44713a1ad8b90ece98",
+      "unique_domains": 88801,
       "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/light.txt",
       "within_expected_range": true
     },
