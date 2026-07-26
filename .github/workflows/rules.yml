@@ -110,9 +110,8 @@ jobs:
     timeout-minutes: 120
     strategy:
       fail-fast: false
-      # Public resolvers throttle the 16 x 20 fan-out. Eight runners keep the
-      # global query rate sustainable and generally finish sooner.
-      max-parallel: 8
+      # Start all shards together, while keeping each runner's DNS pressure low.
+      max-parallel: 16
       matrix:
         shard: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"]
     steps:
@@ -133,7 +132,7 @@ jobs:
             --input "staging/shards/shard-${{ matrix.shard }}.domains" \
             --output "staging/health/shard-${{ matrix.shard }}.jsonl" \
             --summary "staging/health/shard-${{ matrix.shard }}.summary.json" \
-            --concurrency 20 \
+            --concurrency 10 \
             --progress-seconds 30 \
             --progress-steps 20
       - name: Upload DNS results and diagnostics

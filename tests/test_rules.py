@@ -171,6 +171,8 @@ class ActionDiagnosticsTests(unittest.TestCase):
         self.assertLess(workflow.index("contents: read"), workflow.index("jobs:"))
         publish = workflow.index("  publish:")
         self.assertIn("contents: write", workflow[publish:])
+        self.assertIn("max-parallel: 16", workflow)
+        self.assertIn("--concurrency 10", workflow)
 
     @unittest.skipUnless(DNSPYTHON_AVAILABLE, "dnspython is not installed")
     def test_dns_check_streams_results_and_writes_summary(self) -> None:
