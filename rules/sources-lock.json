@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-07-26",
+  "generated_on": "2026-07-27",
   "schema": 1,
   "sources": [
     {
@@ -10,9 +10,9 @@
       "invalid_lines_ignored": 13,
       "license": "GPL-3.0",
       "name": "217heidai Hosts Lite",
-      "parsed_entries": 5110,
-      "sha256": "c38285713e8d81b34cc4bdf15b2d8f3561dd1ec686834767bdcc7b5a1270bc65",
-      "unique_domains": 5110,
+      "parsed_entries": 5133,
+      "sha256": "d77d790f2b261d3e56eda5d3381e3a1105f5e5696afc4f79dcd4c5345c9375c9",
+      "unique_domains": 5133,
       "url": "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt",
       "within_expected_range": true
     },
@@ -38,9 +38,9 @@
       "invalid_lines_ignored": 0,
       "license": "GPL-3.0",
       "name": "HaGeZi Multi Light",
-      "parsed_entries": 88801,
-      "sha256": "19a224840154da6ca8c7049500517d980925fb678334ee44713a1ad8b90ece98",
-      "unique_domains": 88801,
+      "parsed_entries": 87419,
+      "sha256": "05f82d42e57e7e1e9688e7b5a32ea9c71d2013284f8addd646b32c23cbba0971",
+      "unique_domains": 87419,
       "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/light.txt",
       "within_expected_range": true
     },

@@ -2,7 +2,7 @@
   "packs": [
     {
       "default_enabled": true,
-      "domains_sha256": "5e4e7546c82b17d23af03f2320ce51999de20871bb24d7a992acd1f8c5d311c5",
+      "domains_sha256": "a945a11ff2e0073e0eee8ea97fc7a8e6e53afa63208a848a3cac7d9b58b7c3de",
       "file": "reward-tencent.domains",
       "id": "reward.tencent",
       "rules": 38,
@@ -12,7 +12,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "e37f11b4b7b30d2f9b28de39029fb074df5c0a1cd844d2ef5cfd0f0d907b1017",
+      "domains_sha256": "7cc19ec4d1c958382ea5f82967301548f56800f5768e08788385d1b5fe4a7baf",
       "file": "reward-wechat.domains",
       "id": "reward.wechat",
       "rules": 8,
@@ -22,17 +22,17 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "4b812bc8d940bb6382a5b1c1d4ae5ed08b65aebd00ba177d629ee3a205c35c8b",
+      "domains_sha256": "242c052857714cd2c716bbc053cace877c6c99cd0af8a97f52ebd5fc6a6a9d1b",
       "file": "reward-short-video.domains",
       "id": "reward.short-video",
-      "rules": 15,
+      "rules": 14,
       "title_en": "Short-video reward ads",
       "title_zh": "短视频奖励广告",
       "type": "reward_block"
     },
     {
       "default_enabled": true,
-      "domains_sha256": "96b76a3e2b9f1cdb106151642239b416065ffea997ae6184866f70a64a498ed2",
+      "domains_sha256": "796e8f00ac055777df92971a6be1085bbcfdfd55c57e8e9e6dec63bdba37dc61",
       "file": "reward-other.domains",
       "id": "reward.other",
       "rules": 13,
@@ -42,5 +42,5 @@
     }
   ],
   "schema": 1,
-  "version": 2026072601
+  "version": 2026072701
 }

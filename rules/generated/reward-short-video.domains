@@ -1,7 +1,7 @@
 # Independent reward-ad blocking pack.
 # pack_id=reward.short-video
-# rule_version=2026072601
-# rule_count=15
+# rule_version=2026072701
+# rule_count=14
 api-access.pangolin-sdk-toutiao-b.com
 api-access.pangolin-sdk-toutiao.com
 api-access.pangolin-sdk-toutiao1.com
@@ -12,7 +12,6 @@ gdfp.gifshow.com
 gromore.pangolin-sdk-toutiao.com
 log-api.pangolin-sdk-toutiao-b.com
 log-api.pangolin-sdk-toutiao.com
-log-api.pangolin-sdk-toutiao1.com
 open.e.kuaishou.com
 v1-lm.adukwai.com
 v2-lm.adukwai.com

@@ -1,6 +1,6 @@
 # Independent reward-ad rules; excluded from every normal profile.
-# rule_version=2026072601
-# rule_count=74
+# rule_version=2026072701
+# rule_count=73
 ad.tencentmusic.com
 adcdn.tencentmusic.com
 adclick.tencentmusic.com
@@ -31,7 +31,6 @@ ii.gdt.qq.com
 ipv4.gdt.qq.com
 log-api.pangolin-sdk-toutiao-b.com
 log-api.pangolin-sdk-toutiao.com
-log-api.pangolin-sdk-toutiao1.com
 m.gdt.qq.com
 mi.gdt.qq.com
 mtt.eve.mdt.qq.com

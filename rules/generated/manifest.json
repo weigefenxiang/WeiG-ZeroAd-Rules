@@ -15,24 +15,24 @@
       "reward.other"
     ]
   },
-  "generated_on": "2026-07-26",
+  "generated_on": "2026-07-27",
   "health": {
-    "checked": 271300,
+    "checked": 270359,
     "confirmation_threshold": 3,
-    "confirmed_inactive": 14536,
+    "confirmed_inactive": 26040,
     "schema": 1,
     "statuses": {
-      "active": 194152,
-      "exists": 13699,
-      "nxdomain": 39864,
-      "unknown": 23585
+      "active": 193691,
+      "exists": 13972,
+      "nxdomain": 41396,
+      "unknown": 21300
     },
-    "version": 2026072601
+    "version": 2026072701
   },
   "packs": [
     {
       "default_enabled": true,
-      "domains_sha256": "5e4e7546c82b17d23af03f2320ce51999de20871bb24d7a992acd1f8c5d311c5",
+      "domains_sha256": "a945a11ff2e0073e0eee8ea97fc7a8e6e53afa63208a848a3cac7d9b58b7c3de",
       "file": "reward-tencent.domains",
       "id": "reward.tencent",
       "rules": 38,
@@ -42,7 +42,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "e37f11b4b7b30d2f9b28de39029fb074df5c0a1cd844d2ef5cfd0f0d907b1017",
+      "domains_sha256": "7cc19ec4d1c958382ea5f82967301548f56800f5768e08788385d1b5fe4a7baf",
       "file": "reward-wechat.domains",
       "id": "reward.wechat",
       "rules": 8,
@@ -52,17 +52,17 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "4b812bc8d940bb6382a5b1c1d4ae5ed08b65aebd00ba177d629ee3a205c35c8b",
+      "domains_sha256": "242c052857714cd2c716bbc053cace877c6c99cd0af8a97f52ebd5fc6a6a9d1b",
       "file": "reward-short-video.domains",
       "id": "reward.short-video",
-      "rules": 15,
+      "rules": 14,
       "title_en": "Short-video reward ads",
       "title_zh": "短视频奖励广告",
       "type": "reward_block"
     },
     {
       "default_enabled": true,
-      "domains_sha256": "96b76a3e2b9f1cdb106151642239b416065ffea997ae6184866f70a64a498ed2",
+      "domains_sha256": "796e8f00ac055777df92971a6be1085bbcfdfd55c57e8e9e6dec63bdba37dc61",
       "file": "reward-other.domains",
       "id": "reward.other",
       "rules": 13,
@@ -76,69 +76,69 @@
     "cn": {
       "balanced": {
         "domains_file": "cn-balanced.domains",
-        "domains_sha256": "1226c057a7870cb782c9128a60d471515eacb6847c88d480dc57fc295fe4d70e",
+        "domains_sha256": "4b46129879cbe909552a4a9fcfcfc3391979003503ea1bd7af81c1d798917987",
         "hosts_file": "cn-balanced.hosts",
-        "hosts_sha256": "e169c678f3c60dccf2770c88276a9b852b7103108fca2143ef772d78616403df",
+        "hosts_sha256": "76418c5efb56ef5d7d3adf4faebda7eb3a13938468e0784e432aa406c1cbabab",
         "near_safety_cap": false,
-        "rules": 4214,
+        "rules": 4046,
         "safety_cap": 200000
       },
       "lean": {
         "domains_file": "cn-lean.domains",
-        "domains_sha256": "2971817e93a448ef059213ec37098ebf82639b1d77f8ab3debb0ca2b2060ea81",
+        "domains_sha256": "05083417f1efeea1de3fc769e866179507fd8a59f2fc46dffab67b75db4020b3",
         "hosts_file": "cn-lean.hosts",
-        "hosts_sha256": "aa74da24d566736d553eee2ea01180b9dbb0aff713956296228d09041e599353",
+        "hosts_sha256": "f6cd56840d9b41c9a83f667858361743da312be90b94c05489946444571fc499",
         "near_safety_cap": false,
-        "rules": 637,
+        "rules": 639,
         "safety_cap": 200000
       },
       "strict": {
         "domains_file": "cn-strict.domains",
-        "domains_sha256": "166c10ca91134c03b772321c0356573497660580ba115be48230dc2d1f9a7e1b",
+        "domains_sha256": "611a6175949972c54177a8537a6b69d593b8da89cf855078c6b5aaede404797d",
         "hosts_file": "cn-strict.hosts",
-        "hosts_sha256": "6111ddadc96c6569ad3ef37b7b9327426006a4a032074034b35e1e956436f999",
+        "hosts_sha256": "4c053a8c5c7c7189b2fd2803329293f5442805d9414142b0591f952a35824c01",
         "near_safety_cap": false,
-        "rules": 121419,
+        "rules": 114119,
         "safety_cap": 200000
       }
     },
     "global": {
       "balanced": {
         "domains_file": "global-balanced.domains",
-        "domains_sha256": "364bf35b92f6e5de5a210bd274677e62b825e0c2b8db27c0e90349d9ff512997",
+        "domains_sha256": "98659df100303028ec04bf66dd346347e96a8609a1a237a0c4b3587606a2142b",
         "hosts_file": "global-balanced.hosts",
-        "hosts_sha256": "7969e2ffa8a899e2ce12cf7c0c975495af794a95f5c0ef52c7bd2ae324c04db5",
+        "hosts_sha256": "8715cb6c0b4e495004fa977d9f40791c07f846e581b8cb42736cf03eb068e85c",
         "near_safety_cap": false,
-        "rules": 69874,
+        "rules": 68854,
         "safety_cap": 200000
       },
       "lean": {
         "domains_file": "global-lean.domains",
-        "domains_sha256": "d42f0d39126cfe63220b465eae4268511c087ccc3b870f85c39780212d9590b8",
+        "domains_sha256": "401f7dfbd17b2605dba56917c4e7e5c2d1cb09b5e5890a5a377e9c37c3d1f656",
         "hosts_file": "global-lean.hosts",
-        "hosts_sha256": "12d1e4d4f580fbc256697efb9be3c3306e07109d9e7a450fb1eefd5957739159",
+        "hosts_sha256": "dcd2b4cd7b646bc066762acd0fcfe9a2eb776975fccaedc9ed362c509f38f993",
         "near_safety_cap": false,
-        "rules": 3849,
+        "rules": 3798,
         "safety_cap": 150000
       },
       "strict": {
         "domains_file": "global-strict.domains",
-        "domains_sha256": "8f1ce866ae8ec64fb219ccd3be6e60f308d10ed3f5aa332bad000b697961243d",
+        "domains_sha256": "99601184f01d472e561794d11115c74d055eda4d0968d12d66cc769f58835731",
         "hosts_file": "global-strict.hosts",
-        "hosts_sha256": "b9923d2ee9aba14cc0eca6df98e1f75786edafd6932a1343db5c0fcd6927bc13",
+        "hosts_sha256": "dc0262fdb321186edffa7827c3f8b26f5aa585b68e87f4877304943756148ba1",
         "near_safety_cap": false,
-        "rules": 135271,
+        "rules": 130127,
         "safety_cap": 250000
       }
     }
   },
   "reward": {
     "domains_file": "reward-ads.domains",
-    "domains_sha256": "c91f08c4fe17eeb6115626be1d19986d32defec13fdc4468005efe997f04d20a",
+    "domains_sha256": "3a04880c794b111e95217bdaec94494d3d2ea933aac1a1a9eba51dbe55ba120f",
     "near_safety_cap": false,
-    "rules": 74,
+    "rules": 73,
     "safety_cap": 10000
   },
   "schema": 3,
-  "version": 2026072601
+  "version": 2026072701
 }

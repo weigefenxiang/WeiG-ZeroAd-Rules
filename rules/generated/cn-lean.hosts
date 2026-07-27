@@ -1,12 +1,11 @@
 # WeiG ZeroAd generated hosts file. DO NOT EDIT.
 # profile=cn-lean
-# rule_version=2026072601
-# rule_count=637
+# rule_version=2026072701
+# rule_count=639
 127.0.0.1 localhost
 ::1 localhost ip6-localhost ip6-loopback
 0.0.0.0 360ads.com
 0.0.0.0 8le8le.com
-0.0.0.0 91adv.com.cn
 0.0.0.0 a.alimama.cn
 0.0.0.0 a.baidu.com
 0.0.0.0 a.youdao.com
@@ -22,6 +21,7 @@
 0.0.0.0 ad-plus.cn
 0.0.0.0 ad-scope.com.cn
 0.0.0.0 ad-sdk-config.youdao.com
+0.0.0.0 ad.51wnl-cq.com
 0.0.0.0 ad.51wnl.com
 0.0.0.0 ad.api.3g.tudou.com
 0.0.0.0 ad.api.3g.youku.com
@@ -97,7 +97,6 @@
 0.0.0.0 ads-i1.xhscdn.com
 0.0.0.0 ads-i2.xhscdn.com
 0.0.0.0 ads-i3.xhscdn.com
-0.0.0.0 ads-i4.xhscdn.com
 0.0.0.0 ads-img-al.xhscdn.com
 0.0.0.0 ads-img-qc.xhscdn.com
 0.0.0.0 ads-marketing-vivofs.vivo.com.cn
@@ -421,6 +420,7 @@
 0.0.0.0 mcfg.sandai.net
 0.0.0.0 mcgi.v.qq.com
 0.0.0.0 mediav.com
+0.0.0.0 mercury-sdk.snssdk.com
 0.0.0.0 meta.video.qiyi.com
 0.0.0.0 miaowu.baidu.com
 0.0.0.0 miaozhen.com
@@ -613,6 +613,7 @@
 0.0.0.0 video.market.xiaomi.com
 0.0.0.0 vlive.qqvideo.tc.qq.com
 0.0.0.0 voiceads.cn
+0.0.0.0 vs.funshion.com
 0.0.0.0 vstat.v.blog.sohu.com
 0.0.0.0 vv84.bj.bcebos.com
 0.0.0.0 w1.gskwai.com
@@ -625,6 +626,7 @@
 0.0.0.0 winads.cn
 0.0.0.0 wl.hd.sohu.com
 0.0.0.0 wm.baidu.com
+0.0.0.0 wmedia-track.uc.cn
 0.0.0.0 woodpecker.uc.cn
 0.0.0.0 ws.sj.qq.com
 0.0.0.0 wwads.cn
