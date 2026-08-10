@@ -1,12 +1,11 @@
 # WeiG ZeroAd generated hosts file. DO NOT EDIT.
 # profile=cn-lean
-# rule_version=2026072701
-# rule_count=639
+# rule_version=2026081001
+# rule_count=636
 127.0.0.1 localhost
 ::1 localhost ip6-localhost ip6-loopback
 0.0.0.0 360ads.com
 0.0.0.0 8le8le.com
-0.0.0.0 a.alimama.cn
 0.0.0.0 a.baidu.com
 0.0.0.0 a.youdao.com
 0.0.0.0 abroad-ad.kingsoft-office-service.com
@@ -21,6 +20,7 @@
 0.0.0.0 ad-plus.cn
 0.0.0.0 ad-scope.com.cn
 0.0.0.0 ad-sdk-config.youdao.com
+0.0.0.0 ad-splash.hktvmall.com
 0.0.0.0 ad.51wnl-cq.com
 0.0.0.0 ad.51wnl.com
 0.0.0.0 ad.api.3g.tudou.com
@@ -97,6 +97,7 @@
 0.0.0.0 ads-i1.xhscdn.com
 0.0.0.0 ads-i2.xhscdn.com
 0.0.0.0 ads-i3.xhscdn.com
+0.0.0.0 ads-i4.xhscdn.com
 0.0.0.0 ads-img-al.xhscdn.com
 0.0.0.0 ads-img-qc.xhscdn.com
 0.0.0.0 ads-marketing-vivofs.vivo.com.cn
@@ -174,6 +175,7 @@
 0.0.0.0 advert.api.thejoyrun.com
 0.0.0.0 advertise.baicizhan.com
 0.0.0.0 advertpay-vip-ssl.xunlei.com
+0.0.0.0 advertpay.vip.xunlei.com
 0.0.0.0 adview.cn
 0.0.0.0 adview.com
 0.0.0.0 advmob.cn
@@ -247,8 +249,6 @@
 0.0.0.0 bill.agent.56.com
 0.0.0.0 biz5.sandai.net
 0.0.0.0 bj.ad.track.66mobi.com
-0.0.0.0 bm.alimama.cn
-0.0.0.0 bmvip.alimama.cn
 0.0.0.0 brandadsstatic.vivo.com.cn
 0.0.0.0 bro.flyme.cn
 0.0.0.0 browsercfg-drcn.cloud.dbankcloud.cn
@@ -263,7 +263,6 @@
 0.0.0.0 caclick.baidu.com
 0.0.0.0 cad.youku.com
 0.0.0.0 cal.meizu.com
-0.0.0.0 cb.alimama.cn
 0.0.0.0 cb.baidu.com
 0.0.0.0 cbjs.baidu.com
 0.0.0.0 ccc.sys.miui.com
@@ -393,7 +392,6 @@
 0.0.0.0 im-x.jd.com
 0.0.0.0 image-ad.sm.cn
 0.0.0.0 img-x.jd.com
-0.0.0.0 img.alimama.cn
 0.0.0.0 info.wps.cn
 0.0.0.0 infocenter.meizu.com
 0.0.0.0 ipinyou.com
@@ -439,7 +437,6 @@
 0.0.0.0 msg2.video.qiyi.com
 0.0.0.0 msgv6.qy.net
 0.0.0.0 msite.baidu.com
-0.0.0.0 mssdk-bu.bytedance.com
 0.0.0.0 mssdk.volces.com
 0.0.0.0 mssdk.zijieapi.com
 0.0.0.0 mvads.kugou.com

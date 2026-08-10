@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-07-27",
+  "generated_on": "2026-08-10",
   "schema": 1,
   "sources": [
     {
@@ -10,9 +10,9 @@
       "invalid_lines_ignored": 13,
       "license": "GPL-3.0",
       "name": "217heidai Hosts Lite",
-      "parsed_entries": 5133,
-      "sha256": "d77d790f2b261d3e56eda5d3381e3a1105f5e5696afc4f79dcd4c5345c9375c9",
-      "unique_domains": 5133,
+      "parsed_entries": 5027,
+      "sha256": "cefc10bfb3c14e30c5d6cd5627bd717b84fe5ba50a235d57d5996d1fa80d4e43",
+      "unique_domains": 5027,
       "url": "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockhostslite.txt",
       "within_expected_range": true
     },
@@ -24,9 +24,9 @@
       "invalid_lines_ignored": 0,
       "license": "MIT",
       "name": "anti-AD domains",
-      "parsed_entries": 108820,
-      "sha256": "9bbff068d13a6e3d40086dc93de355809a52e3725644290926c711d51de5b898",
-      "unique_domains": 108820,
+      "parsed_entries": 110862,
+      "sha256": "788a1c896b9f27871a9be68d6adc4a947a77e9590cd4db12a1b5c211d5ce9099",
+      "unique_domains": 110862,
       "url": "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-domains.txt",
       "within_expected_range": true
     },
@@ -38,10 +38,10 @@
       "invalid_lines_ignored": 0,
       "license": "GPL-3.0",
       "name": "HaGeZi Multi Light",
-      "parsed_entries": 87419,
-      "sha256": "05f82d42e57e7e1e9688e7b5a32ea9c71d2013284f8addd646b32c23cbba0971",
-      "unique_domains": 87419,
-      "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/light.txt",
+      "parsed_entries": 88088,
+      "sha256": "3d7e2e81f418cb6cc6bdfe5621396f6fe2c4d52e8338ad94e7d4887c8fd3d08d",
+      "unique_domains": 88088,
+      "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/domains/light.txt",
       "within_expected_range": true
     },
     {
@@ -52,9 +52,9 @@
       "invalid_lines_ignored": 14,
       "license": "MIT",
       "name": "StevenBlack unified hosts",
-      "parsed_entries": 93158,
-      "sha256": "0bd73cb6c524a1dd71afa0d4f764beebc9f14f97bbad3122ad01225f56017ab9",
-      "unique_domains": 93157,
+      "parsed_entries": 99560,
+      "sha256": "517e019042bf6ec59ff1568e1ba2ace77feb4f1bde6dfd8cfcbb7eaf048e78d5",
+      "unique_domains": 99559,
       "url": "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
       "within_expected_range": true
     }

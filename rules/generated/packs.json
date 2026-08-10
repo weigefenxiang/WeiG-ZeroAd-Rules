@@ -2,7 +2,7 @@
   "packs": [
     {
       "default_enabled": true,
-      "domains_sha256": "a945a11ff2e0073e0eee8ea97fc7a8e6e53afa63208a848a3cac7d9b58b7c3de",
+      "domains_sha256": "3d9f9bc7fff27ba6b8948f26bad8c187f81a84be6030c8377442faedfa87d714",
       "file": "reward-tencent.domains",
       "id": "reward.tencent",
       "rules": 38,
@@ -12,7 +12,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "7cc19ec4d1c958382ea5f82967301548f56800f5768e08788385d1b5fe4a7baf",
+      "domains_sha256": "2df2ff6e96c4377d9842c4aa7ae6d541541b171d06868576adeab9cabc638335",
       "file": "reward-wechat.domains",
       "id": "reward.wechat",
       "rules": 8,
@@ -22,7 +22,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "242c052857714cd2c716bbc053cace877c6c99cd0af8a97f52ebd5fc6a6a9d1b",
+      "domains_sha256": "34c231c2a0cf34dd28f18d4bca04733cba90d578c991bbd790ffbd951b6c9a21",
       "file": "reward-short-video.domains",
       "id": "reward.short-video",
       "rules": 14,
@@ -32,7 +32,7 @@
     },
     {
       "default_enabled": true,
-      "domains_sha256": "796e8f00ac055777df92971a6be1085bbcfdfd55c57e8e9e6dec63bdba37dc61",
+      "domains_sha256": "7e80bffddf37e23ee055ee84dadca96a26460d0b587bb9087846580fbcdacc3b",
       "file": "reward-other.domains",
       "id": "reward.other",
       "rules": 13,
@@ -42,5 +42,5 @@
     }
   ],
   "schema": 1,
-  "version": 2026072701
+  "version": 2026081001
 }

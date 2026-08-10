@@ -1,6 +1,6 @@
 # Independent reward-ad blocking pack.
 # pack_id=reward.short-video
-# rule_version=2026072701
+# rule_version=2026081001
 # rule_count=14
 api-access.pangolin-sdk-toutiao-b.com
 api-access.pangolin-sdk-toutiao.com
