@@ -33,7 +33,7 @@
       "id": "hagezi-light",
       "name": "HaGeZi Multi Light",
       "type": "remote",
-      "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/light.txt",
+      "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/domains/light.txt",
       "role": "global-balanced",
       "license": "GPL-3.0",
       "min_domains": 10000,
